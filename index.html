@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sagnik Adhikary Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Dashboard Navigation -->
+    <div class="dashboard">
+        <nav>
+            <img src="profile-pic.jpg.jpeg" alt="Sagnik Adhikary" class="profile-pic-header">
+            <ul>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <!-- Dark Mode Toggle Icon -->
+            <button class="theme-toggle-btn" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Hero Section with Background Image -->
+    <div class="hero">
+        <div class="overlay"></div>
+        <div class="content">
+            <!-- Animated Line -->
+            <h1>Hello, I'm <span class="animated-text">Sagnik Adhikary</span></h1>
+            <p>Electronics and Communication Engineering Student | Web Dev | Graphic Design |AI & ML Enthusiast</p>
+            <a href="#about" class="btn">Learn More</a>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="profile-container" data-aos="fade-up">
+                <img src="profilePic.jpeg" alt="Sagnik Adhikary" class="profile-pic">
+                <div class="profile-text">
+                    <h2>About Me</h2>
+                    <p>I am Sagnik Adhikary, currently pursuing Electronics and Communication Engineering. I'm a working committee member of <strong>Xplorica</strong>, the official tech club of Future Institute of Engineering and Management. I specialize in logo design and enjoy exploring AI and ML as an enthusiast. I’m passionate about building web solutions and diving into new technologies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2>My Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card" data-aos="fade-up">
+                    <h3>Logo Design</h3>
+                    <p>Experienced in creating unique logos for brands and businesses.</p>
+                </div>
+                <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
+                    <h3>AI & ML Enthusiast</h3>
+                    <p>Exploring intelligent systems and AI-driven projects as an enthusiast.</p>
+                </div>
+                <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Web Development</h3>
+                    <p>Skilled in front-end and back-end web development to create dynamic websites.</p>
+                </div>
+                <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
+                    <h3>Programming</h3>
+                    <p>Knowledge of Java, C, and Python for software development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2>Projects</h2>
+            <div class="project-grid">
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="100">
+                    <h3>Health Besh</h3>
+                    <p>Blockchain-based health tracking platform to assist patients and doctors.</p>
+                </div>
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="200">
+                    <h3>Genomic Data Analysis</h3>
+                    <p>Tool for disease prediction using genetic data analysis.</p>
+                </div>
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="300">
+                    <h3>Bus Tracking App</h3>
+                    <p>A web app for tracking local buses in real-time.</p>
+                </div>
+                <div class="project-card" data-aos="zoom-in" data-aos-delay="400">
+                    <h3>PetCareHub</h3>
+                    <p>Comprehensive platform for pet care, hospital info, and pet adoption.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Contact Me</h2>
+            <p>Let's connect! You can reach me via:</p>
+            <div class="contact-info">
+                <div class="contact-item" data-aos="fade-up">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:sagnik25tojo@gmail.com">sagnik25tojo@gmail.com</a>
+                </div>
+                <div class="contact-item" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-phone"></i>
+                    <span>Call : NaHi DuNgA</span>
+                </div>
+            </div>
+            <div class="social-links" data-aos="fade-up" data-aos-delay="200">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-fiverr"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Sagnik Adhikary. All rights reserved.</p>
+    </footer>
+
+    <!-- AOS Animation Script -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const toggleIcon = themeToggle.querySelector('i');
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                toggleIcon.classList.remove('fa-moon');
+                toggleIcon.classList.add('fa-sun');
+            } else {
+                toggleIcon.classList.remove('fa-sun');
+                toggleIcon.classList.add('fa-moon');
+            }
+        });
+    </script>
+</body>
+</html>
