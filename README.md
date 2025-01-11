@@ -1,2 +1,2 @@
 # Portfolio
-Hi welcome! My portfolio website
+Hi welcome to! My portfolio website
