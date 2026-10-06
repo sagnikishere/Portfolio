@@ -2087,10 +2087,62 @@ button {
 }
 
 .footer-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.18em;
   color: var(--text-dim);
+}
+
+.footer-social-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.footer-social-link {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.footer-social-link:hover {
+  color: var(--neon-yellow);
+  transform: translateY(-1px);
+}
+
+.footer-dot {
+  font-size: 0.45rem;
+  color: var(--border-medium);
+}
+
+.mobile-social-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0.8rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+.mobile-social-link {
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.mobile-social-link:hover {
+  color: var(--neon-yellow);
+}
+
+.mobile-social-row .sep {
+  color: var(--border-medium);
 }
 
 .back-to-top-btn {
