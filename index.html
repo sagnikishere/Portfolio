@@ -1,159 +1,967 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sagnik Adhikary Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- AOS Animation Library -->
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAGNIK — Creative Developer & Art Director | Portfolio</title>
+  <meta name="description"
+    content="Cinematic portfolio of Sagnik, Creative Developer & Designer crafting high-fidelity digital experiences, WebGL experiments, and editorial interactive platforms.">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,12 90,88 72,88 50,45 28,88 10,88' fill='%23DFFF00'/></svg>">
+
+  <!-- Premium Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <!-- Top Dashboard Navigation -->
-    <div class="dashboard">
-        <nav>
-            <img src="profile-pic.jpg.jpeg" alt="Sagnik Adhikary" class="profile-pic-header">
-            <ul>
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <!-- Dark Mode Toggle Icon -->
-            <button class="theme-toggle-btn" id="theme-toggle">
-                <i class="fas fa-moon"></i>
+
+<body class="dark-theme">
+  <!-- Minimal Custom Cursor -->
+  <div id="custom-cursor" class="custom-cursor" aria-hidden="true">
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+    <span class="cursor-label">VIEW</span>
+  </div>
+
+  <!-- Cinematic Page Transition Sweep Overlay -->
+  <div id="page-sweep-overlay" class="page-sweep-overlay" aria-hidden="true">
+    <div class="sweep-laser"></div>
+  </div>
+
+  <!-- Subtle Film Grain / Noise Overlay -->
+  <div class="film-grain-overlay" aria-hidden="true"></div>
+
+  <!-- Ambient Sound Control Floating Badge -->
+  <div class="audio-control-wrapper">
+    <button id="sound-toggle-btn" class="audio-toggle-btn" aria-label="Toggle cinematic ambient audio">
+      <span class="audio-bars" aria-hidden="true">
+        <span class="bar bar-1"></span>
+        <span class="bar bar-2"></span>
+        <span class="bar bar-3"></span>
+      </span>
+      <span class="audio-label">SOUND: <span id="sound-state-text">OFF</span></span>
+    </button>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header id="main-nav" class="nav-header">
+    <div class="nav-container">
+      <a href="#hero" class="nav-brand" aria-label="Sagnik Portfolio Home">
+        <svg class="brand-monogram-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,8 52,52 42,52 30,28 18,52 8,52" stroke="#DFFF00" stroke-width="2.5" fill="none" />
+          <path d="M22,38 L38,38" stroke="#DFFF00" stroke-width="2" />
+          <path d="M26,44 L29,47 L26,50" stroke="#FFFFFF" stroke-width="1.5" />
+          <path d="M34,44 L31,47 L34,50" stroke="#FFFFFF" stroke-width="1.5" />
+        </svg>
+        <div class="brand-text-block">
+          <span class="brand-name">SAGNIK</span>
+          <span class="brand-sub">STUDIO · 2026</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Items -->
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#about" class="nav-link" data-section="about">
+              <span class="nav-num">01</span>
+              <span class="nav-title">ABOUT ME</span>
+              <span class="nav-line"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#skills" class="nav-link" data-section="skills">
+              <span class="nav-num">02</span>
+              <span class="nav-title">SKILLS</span>
+              <span class="nav-line"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#projects" class="nav-link" data-section="projects">
+              <span class="nav-num">03</span>
+              <span class="nav-title">PROJECTS</span>
+              <span class="nav-line"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#contact" class="nav-link" data-section="contact">
+              <span class="nav-num">04</span>
+              <span class="nav-title">CONTACT ME</span>
+              <span class="nav-line"></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Right Action & Mobile Menu Toggle -->
+      <div class="nav-right">
+        <button id="nav-sound-btn" class="nav-sound-btn" aria-label="Toggle cinematic ambient audio">
+          <span class="audio-bars" aria-hidden="true">
+            <span class="bar bar-1"></span>
+            <span class="bar bar-2"></span>
+            <span class="bar bar-3"></span>
+          </span>
+          <span class="nav-sound-label">AUDIO: <span class="sound-state-nav">OFF</span></span>
+        </button>
+        <div class="nav-status-indicator" title="Current Status">
+          <span class="pulse-dot"></span>
+          <span class="status-txt">AVAILABLE 2026</span>
+        </div>
+        <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="Open mobile menu" aria-expanded="false">
+          <span class="menu-label">MENU</span>
+          <div class="menu-hamburger">
+            <span class="line line-1"></span>
+            <span class="line line-2"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Active Navigation Tracker Line -->
+    <div id="nav-active-tracker" class="nav-active-tracker"></div>
+  </header>
+
+  <!-- Mobile Fullscreen Menu Drawer -->
+  <div id="mobile-menu-drawer" class="mobile-menu-drawer" aria-hidden="true">
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-header">
+        <span class="mono-label">// NAVIGATION INDEX</span>
+        <button id="mobile-menu-close" class="mobile-menu-close" aria-label="Close menu">✕</button>
+      </div>
+      <ul class="mobile-nav-list">
+        <li>
+          <a href="#about" class="mobile-nav-link" data-section="about">
+            <span class="mobile-nav-num">01</span>
+            <span class="mobile-nav-title">ABOUT ME</span>
+          </a>
+        </li>
+        <li>
+          <a href="#skills" class="mobile-nav-link" data-section="skills">
+            <span class="mobile-nav-num">02</span>
+            <span class="mobile-nav-title">SKILLS</span>
+          </a>
+        </li>
+        <li>
+          <a href="#projects" class="mobile-nav-link" data-section="projects">
+            <span class="mobile-nav-num">03</span>
+            <span class="mobile-nav-title">PROJECTS</span>
+          </a>
+        </li>
+        <li>
+          <a href="#contact" class="mobile-nav-link" data-section="contact">
+            <span class="mobile-nav-num">04</span>
+            <span class="mobile-nav-title">CONTACT ME</span>
+          </a>
+        </li>
+      </ul>
+      <div class="mobile-menu-footer">
+        <div class="mobile-coord">// 22.5726° N, 88.3639° E</div>
+        <div class="mobile-tag">CREATIVE DEVELOPER & DESIGNER</div>
+      </div>
+    </div>
+  </div>
+
+  <main id="smooth-wrapper">
+    <div id="smooth-content">
+
+      <!-- ==============================================
+           HERO SECTION (100vh Full Screen Cinematic Stage)
+           ============================================== -->
+      <section id="hero" class="hero-section" aria-label="Hero Introduction">
+        <!-- Volumetric Smoke Canvas Reacting to Cursor -->
+        <canvas id="smoke-canvas" class="smoke-canvas" aria-hidden="true"></canvas>
+
+        <!-- Ambient Volumetric Yellow Halo Behind Subject -->
+        <div class="hero-atmospheric-glow" aria-hidden="true"></div>
+
+        <!-- Giant Background Oversized Typography (Partially cropped, behind portrait) -->
+        <div class="hero-bg-typography" aria-hidden="true">
+          <div class="hero-text-row row-top">
+            <span class="hero-giant-word" data-parallax="0.12">SAGNIK</span>
+          </div>
+          <div class="hero-text-row row-mid">
+            <span class="hero-giant-subword" data-parallax="0.08">CREATIVE DEVELOPER</span>
+          </div>
+          <div class="hero-text-row row-bottom">
+            <span class="hero-giant-subword outline-mode" data-parallax="0.16">DESIGN · CODE · MOTION</span>
+          </div>
+        </div>
+
+        <!-- Interactive Flashlight / Cursor Reveal Portrait Stage -->
+        <div id="hero-portrait-stage" class="hero-portrait-stage">
+          <!-- Subtle Yellow Rim Lighting Contour -->
+          <div class="portrait-rim-glow" aria-hidden="true"></div>
+
+          <!-- Base Silhouette Layer (Extremely dark and mysterious) -->
+          <img id="portrait-base-img" class="portrait-layer portrait-base" src="assets/portrait_cutout_ref.png"
+            alt="Sagnik Portrait Silhouette">
+
+          <!-- Flashlight Cursor Reveal Layer (Full clarity, revealed via organic soft radial mask) -->
+          <img id="portrait-reveal-img" class="portrait-layer portrait-reveal" src="assets/portrait_cutout_ref.png"
+            alt="Sagnik Portrait Illuminated">
+
+          <!-- Flashlight Spotlight Volumetric Glow Beam -->
+          <div id="spotlight-beam" class="spotlight-beam" aria-hidden="true"></div>
+
+          <!-- Interactive Portrait Mode Switcher Pill -->
+          <div class="portrait-mode-pill" title="Switch portrait treatment">
+            <span class="mode-label">PORTRAIT:</span>
+            <button id="toggle-portrait-style" class="mode-btn" type="button">
+              <span class="mode-tag active" data-mode="editorial">EDITORIAL CUT</span>
+              <span class="mode-divider">/</span>
+              <span class="mode-tag" data-mode="photographic">RAW CAMERA</span>
             </button>
-        </nav>
+          </div>
+        </div>
+
+        <!-- Hero Content / Minimal Editorial Details (Bottom & Sides) -->
+        <div class="hero-content-container">
+          <div class="hero-meta-left">
+            <div class="hero-badge">
+              <span class="hero-badge-pill">CREATIVE DEVELOPER</span>
+              <span class="hero-badge-sub">DESIGNER / DEVELOPER / DIGITAL CREATIVE</span>
+            </div>
+            <h1 class="hero-manifesto-statement">
+              I BUILD DIGITAL EXPERIENCES<br>
+              <span class="text-neon-yellow">THAT FEEL ALIVE.</span>
+            </h1>
+            <div class="hero-cta-group">
+              <a href="#projects" class="hero-cta-btn" id="hero-view-work-btn">
+                <span>VIEW MY WORK</span>
+                <span class="btn-arrow">→</span>
+              </a>
+              <a href="#about" class="hero-secondary-link">
+                <span>EXPLORE PHILOSOPHY</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-meta-right">
+            <div class="hero-spec-item">
+              <span class="spec-label">// SYSTEM</span>
+              <span class="spec-value">WebGL · Shaders · GSAP</span>
+            </div>
+            <div class="hero-spec-item">
+              <span class="spec-label">// FOCUS</span>
+              <span class="spec-value">Cinematic Direction & Kinetic Code</span>
+            </div>
+            <div class="hero-scroll-cue">
+              <div class="mouse-icon">
+                <span class="wheel"></span>
+              </div>
+              <span class="scroll-label">HOVER TO ILLUMINATE / SCROLL</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           ABOUT ME SECTION (Editorial Narrative & Identity)
+           ============================================== -->
+      <section id="about" class="about-section section-padding" aria-label="About Sagnik">
+        <div class="section-container">
+          <!-- Editorial Section Header -->
+          <div class="section-header-editorial">
+            <div class="header-prefix">
+              <span class="index-num">// 01</span>
+              <span class="index-cat">IDENTITY & PHILOSOPHY</span>
+            </div>
+            <h2 class="editorial-huge-title">
+              ABOUT<br>
+              <span class="text-stroke-yellow">ME.</span>
+            </h2>
+          </div>
+
+          <!-- Editorial Layout: Left Photo Frame + Right Narrative -->
+          <div class="about-grid">
+            <div class="about-visual-col">
+              <div class="about-photo-wrapper">
+                <div class="photo-accent-frame" aria-hidden="true"></div>
+                <div class="photo-container">
+                  <img src="assets/img1_oriented.jpg" alt="Sagnik Creative Developer Portrait"
+                    class="about-portrait-img">
+                  <div class="photo-yellow-vignette" aria-hidden="true"></div>
+                </div>
+
+                <!-- Floating Editorial Badges -->
+                <div class="about-badge-card badge-top">
+                  <span class="badge-num">2026</span>
+                  <span class="badge-txt">ACTIVE ART DIRECTION</span>
+                </div>
+                <div class="about-badge-card badge-bottom">
+                  <div class="status-indicator-dot"></div>
+                  <span class="badge-txt">OPEN FOR COLLABORATIONS</span>
+                </div>
+              </div>
+
+              <!-- Brand Monogram Box -->
+              <div class="about-monogram-box">
+                <img src="assets/sagnik_peaks.png" alt="Sagnik Brand Crest" class="about-crest-img">
+                <div class="crest-details">
+                  <span class="crest-title">SAGNIK CREATIVE</span>
+                  <span class="crest-desc">Code × Art × Motion Synthesis</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="about-content-col">
+              <div class="lead-quote">
+                <p>
+                  "Design without intention is decoration. Code without soul is just logic. I merge both into digital
+                  organisms that captivate, communicate, and resonate."
+                </p>
+              </div>
+
+              <div class="about-narrative-text">
+                <p class="reveal-paragraph">
+                  I am a creative developer, interface designer, and digital craftsman obsessively focused on bridging
+                  the divide between high-end visual aesthetics and high-performance interactive engineering.
+                </p>
+                <p class="reveal-paragraph">
+                  Working with modern WebGL pipelines, custom GLSL shaders, physics engines, and cinematic editorial art
+                  direction, I design experiences that defy the template era. My work celebrates deep negative space,
+                  tactile cursor interaction, and photographic lighting.
+                </p>
+              </div>
+
+              <!-- Editorial Stats Counter Row -->
+              <div class="editorial-stats-row">
+                <div class="stat-card">
+                  <div class="stat-number" data-target="05">05<span class="stat-plus">+</span></div>
+                  <div class="stat-label">YEARS CRAFTING</div>
+                  <div class="stat-sub">Digital Realities</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number" data-target="30">30<span class="stat-plus">+</span></div>
+                  <div class="stat-label">COMMISSIONS</div>
+                  <div class="stat-sub">Shipped Worldwide</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number" data-target="100">100<span class="stat-plus">%</span></div>
+                  <div class="stat-label">PERFORMANCE</div>
+                  <div class="stat-sub">GPU-Accelerated 60FPS</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number" data-target="04">04<span class="stat-plus">x</span></div>
+                  <div class="stat-label">AWARD RECOGNITIONS</div>
+                  <div class="stat-sub">Editorial & Innovation</div>
+                </div>
+              </div>
+
+              <!-- Core Pillars -->
+              <div class="pillars-container">
+                <div class="pillar-item">
+                  <span class="pillar-num">01 /</span>
+                  <div class="pillar-info">
+                    <h4>ATMOSPHERIC ART DIRECTION</h4>
+                    <p>Dramatic illumination, curated palettes, and editorial typography creating bespoke identities.
+                    </p>
+                  </div>
+                </div>
+                <div class="pillar-item">
+                  <span class="pillar-num">02 /</span>
+                  <div class="pillar-info">
+                    <h4>KINETIC DIGITAL INTERACTION</h4>
+                    <p>Physics-driven momentum, organic cursor spotlights, and fluid displacement responding to touch.
+                    </p>
+                  </div>
+                </div>
+                <div class="pillar-item">
+                  <span class="pillar-num">03 /</span>
+                  <div class="pillar-info">
+                    <h4>SURGICAL CODE ARCHITECTURE</h4>
+                    <p>Optimized bundle footprints, GPU layer isolation, and strict accessible semantic HTML
+                      foundations.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           SKILLS SECTION (Interactive Editorial Matrix)
+           ============================================== -->
+      <section id="skills" class="skills-section section-padding" aria-label="Skills and Capabilities">
+        <div class="section-container">
+          <div class="section-header-editorial">
+            <div class="header-prefix">
+              <span class="index-num">// 02</span>
+              <span class="index-cat">ARSENAL & CRAFT</span>
+            </div>
+            <h2 class="editorial-huge-title">
+              SKILLS &<br>
+              <span class="text-neon-yellow">CAPABILITIES.</span>
+            </h2>
+          </div>
+
+          <!-- Interactive Category Navigation Pills -->
+          <div class="skills-category-tabs" role="tablist">
+            <button class="cat-tab-btn active" role="tab" data-filter="all" aria-selected="true">ALL
+              DISCIPLINES</button>
+            <button class="cat-tab-btn" role="tab" data-filter="frontend" aria-selected="false">FRONTEND
+              ARCHITECTURE</button>
+            <button class="cat-tab-btn" role="tab" data-filter="motion" aria-selected="false">CREATIVE CODE &
+              MOTION</button>
+            <button class="cat-tab-btn" role="tab" data-filter="design" aria-selected="false">ART DIRECTION &
+              DESIGN</button>
+          </div>
+
+          <!-- Editorial Skills Layout (Large typography & interactive metrics) -->
+          <div class="skills-editorial-grid">
+
+            <!-- Discipline 1: Frontend Architecture -->
+            <div class="skill-discipline-panel" data-category="frontend">
+              <div class="discipline-head">
+                <span class="disc-num">01</span>
+                <h3 class="disc-title">FRONTEND</h3>
+                <span class="disc-sub">// HIGH INTEGRITY CLIENT ARCHITECTURE</span>
+              </div>
+              <div class="skill-items-stream">
+                <div class="skill-pill" data-desc="Semantic HTML5, Accessibility (WCAG 2.1), Microdata & SEO mastery."
+                  data-exp="98%">
+                  <span class="skill-name">HTML5</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 98%"></span></span>
+                </div>
+                <div class="skill-pill"
+                  data-desc="Modern CSS Modules, Custom Properties, Fluid Layouts, Pure CSS Animations." data-exp="96%">
+                  <span class="skill-name">CSS3 / SCSS</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 96%"></span></span>
+                </div>
+                <div class="skill-pill"
+                  data-desc="ESNext JavaScript, Functional Patterns, Web APIs, Canvas Context, Performance Tuning."
+                  data-exp="95%">
+                  <span class="skill-name">JAVASCRIPT</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 95%"></span></span>
+                </div>
+                <div class="skill-pill"
+                  data-desc="Component systems, Hooks, Custom State Architecture, High-Fidelity UI." data-exp="92%">
+                  <span class="skill-name">REACT</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 92%"></span></span>
+                </div>
+                <div class="skill-pill" data-desc="SSR, SSG, Server Actions, Edge Runtime, Performance Optimization."
+                  data-exp="90%">
+                  <span class="skill-name">NEXT.JS</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 90%"></span></span>
+                </div>
+                <div class="skill-pill" data-desc="Strict Typing, Clean Generics, Modular Enterprise Architecture."
+                  data-exp="88%">
+                  <span class="skill-name">TYPESCRIPT</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 88%"></span></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Discipline 2: Creative Code & Motion -->
+            <div class="skill-discipline-panel" data-category="motion">
+              <div class="discipline-head">
+                <span class="disc-num">02</span>
+                <h3 class="disc-title">CREATIVE CODE</h3>
+                <span class="disc-sub">// GLSL · PHYSICS · 60FPS EXPERIMENTAL</span>
+              </div>
+              <div class="skill-items-stream">
+                <div class="skill-pill"
+                  data-desc="ScrollTrigger, Timelines, Flip, SplitText, Kinetic Micro-Interactions." data-exp="96%">
+                  <span class="skill-name">GSAP</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 96%"></span></span>
+                </div>
+                <div class="skill-pill"
+                  data-desc="Scene graphs, PBR materials, Post-processing pipelines, Custom Shaders." data-exp="90%">
+                  <span class="skill-name">THREE.JS</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 90%"></span></span>
+                </div>
+                <div class="skill-pill"
+                  data-desc="Fragment & Vertex shaders, Volumetric Fog, Fluid Simulations, Raymarching." data-exp="86%">
+                  <span class="skill-name">WEBGL / GLSL</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 86%"></span></span>
+                </div>
+                <div class="skill-pill" data-desc="Spring physics, Gesture recognition, Layout animations."
+                  data-exp="92%">
+                  <span class="skill-name">FRAMER MOTION</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 92%"></span></span>
+                </div>
+                <div class="skill-pill"
+                  data-desc="2D High-performance particle engines, Perlin Noise, Audio Visualizers." data-exp="94%">
+                  <span class="skill-name">CANVAS 2D API</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 94%"></span></span>
+                </div>
+                <div class="skill-pill"
+                  data-desc="Silky momentum scrolling, inertia dampening, cross-browser normalization." data-exp="95%">
+                  <span class="skill-name">LENIS SCROLL</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 95%"></span></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Discipline 3: Art Direction & Design -->
+            <div class="skill-discipline-panel" data-category="design">
+              <div class="discipline-head">
+                <span class="disc-num">03</span>
+                <h3 class="disc-title">DESIGN & DIRECTION</h3>
+                <span class="disc-sub">// EDITORIAL SYSTEMS · LUXURY IDENTITY</span>
+              </div>
+              <div class="skill-items-stream">
+                <div class="skill-pill" data-desc="Design Systems, Wireframing, High-Fidelity UI Prototyping, Tokens."
+                  data-exp="94%">
+                  <span class="skill-name">FIGMA</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 94%"></span></span>
+                </div>
+                <div class="skill-pill"
+                  data-desc="Color Grading, Texture generation, Editorial Compositions, Asset Masking." data-exp="92%">
+                  <span class="skill-name">PHOTOSHOP</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 92%"></span></span>
+                </div>
+                <div class="skill-pill" data-desc="Vector Monograms, Editorial Typographic Graphics, SVG Craft."
+                  data-exp="90%">
+                  <span class="skill-name">ILLUSTRATOR</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 90%"></span></span>
+                </div>
+                <div class="skill-pill" data-desc="Kinetic Editorial Sequences, Title Cards, Lottie Vector Keyframing."
+                  data-exp="88%">
+                  <span class="skill-name">MOTION DESIGN</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 88%"></span></span>
+                </div>
+                <div class="skill-pill" data-desc="Lighting setups, Architectural geometry, Material exploration."
+                  data-exp="84%">
+                  <span class="skill-name">BLENDER / 3D</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 84%"></span></span>
+                </div>
+                <div class="skill-pill" data-desc="Moodboards, Typographic Hierarchy, Negative Space Curation."
+                  data-exp="96%">
+                  <span class="skill-name">ART DIRECTION</span>
+                  <span class="skill-bar"><span class="bar-fill" style="width: 96%"></span></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Dynamic Live Skill Detail HUD -->
+          <div id="skill-detail-hud" class="skill-detail-hud" aria-live="polite">
+            <div class="hud-left">
+              <span class="hud-tag">// INSPECTED CAPABILITY</span>
+              <h4 id="hud-skill-title">HOVER ANY DISCIPLINE TO AUDIT PROFICIENCY</h4>
+            </div>
+            <div class="hud-right">
+              <p id="hud-skill-desc">Select or hover over any skill pill above to inspect exact implementation scope and
+                technical depth.</p>
+              <div class="hud-metric">
+                <span class="metric-label">MASTERY INDEX:</span>
+                <span id="hud-skill-exp" class="metric-val text-neon-yellow">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           PROJECTS SECTION (Large Editorial Showcase)
+           ============================================== -->
+      <section id="projects" class="projects-section section-padding" aria-label="Selected Projects">
+        <div class="section-container">
+          <div class="section-header-editorial">
+            <div class="header-prefix">
+              <span class="index-num">// 03</span>
+              <span class="index-cat">CURATED WORK ARCHIVE</span>
+            </div>
+            <div class="title-with-meta">
+              <h2 class="editorial-huge-title">
+                SELECTED<br>
+                <span class="text-neon-yellow">PROJECTS.</span>
+              </h2>
+              <p class="section-lead-note">
+                A selection of experimental platforms, brand experiences, and digital ecosystems built with obsessive
+                attention to craft.
+              </p>
+            </div>
+          </div>
+
+          <!-- Editorial Project Panels -->
+          <div class="projects-editorial-list">
+
+            <!-- Project 01: LUMEN OS -->
+            <article class="project-panel" data-project="lumen">
+              <div class="project-panel-inner">
+                <div class="project-media-col">
+                  <div class="project-image-box">
+                    <img src="assets/project_lumen.jpg" alt="Lumen Architectural Brand Experience" class="project-img"
+                      loading="lazy">
+                    <div class="project-image-vignette" aria-hidden="true"></div>
+                    <div class="project-image-badge">01 / FEATURED</div>
+                  </div>
+                </div>
+                <div class="project-info-col">
+                  <div class="project-top-meta">
+                    <span class="project-index">01 — BRAND EXPERIENCE</span>
+                    <span class="project-year">2026</span>
+                  </div>
+                  <h3 class="project-title">KINETIC LUMEN</h3>
+                  <p class="project-desc">
+                    An architectural brand experience merging geometric 3D monoliths with real-time neon raymarching
+                    shaders. Engineered for spatial luxury and interactive discovery.
+                  </p>
+                  <div class="project-tech-tags">
+                    <span class="tag">WebGL</span>
+                    <span class="tag">Three.js</span>
+                    <span class="tag">GLSL Shaders</span>
+                    <span class="tag">GSAP</span>
+                  </div>
+                  <div class="project-actions">
+                    <button class="project-modal-trigger-btn" data-project-id="lumen">
+                      <span>VIEW CASE STUDY</span>
+                      <span class="btn-arrow">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 02: ONYX & LUMINAR -->
+            <article class="project-panel" data-project="aura">
+              <div class="project-panel-inner">
+                <div class="project-media-col">
+                  <div class="project-image-box">
+                    <img src="assets/project_aura.jpg" alt="Onyx and Luminar High Fashion Digital Showcase"
+                      class="project-img" loading="lazy">
+                    <div class="project-image-vignette" aria-hidden="true"></div>
+                    <div class="project-image-badge">02 / INTERACTIVE</div>
+                  </div>
+                </div>
+                <div class="project-info-col">
+                  <div class="project-top-meta">
+                    <span class="project-index">02 — PORTFOLIO & FASHION</span>
+                    <span class="project-year">2025</span>
+                  </div>
+                  <h3 class="project-title">ONYX & LUMINAR</h3>
+                  <p class="project-desc">
+                    A futuristic digital runway showcase where fluid chrome and sculptural textiles react to cursor
+                    velocity. High-contrast neon yellow rim illumination on deep matte obsidian.
+                  </p>
+                  <div class="project-tech-tags">
+                    <span class="tag">Creative Direction</span>
+                    <span class="tag">React</span>
+                    <span class="tag">Canvas 2D</span>
+                    <span class="tag">Lenis Scroll</span>
+                  </div>
+                  <div class="project-actions">
+                    <button class="project-modal-trigger-btn" data-project-id="aura">
+                      <span>VIEW CASE STUDY</span>
+                      <span class="btn-arrow">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 03: AURAL WAVES -->
+            <article class="project-panel" data-project="neural">
+              <div class="project-panel-inner">
+                <div class="project-media-col">
+                  <div class="project-image-box">
+                    <img src="assets/project_neural.jpg" alt="Aural Waves Audio Visual Digital Installation"
+                      class="project-img" loading="lazy">
+                    <div class="project-image-vignette" aria-hidden="true"></div>
+                    <div class="project-image-badge">03 / AUDIO-VISUAL</div>
+                  </div>
+                </div>
+                <div class="project-info-col">
+                  <div class="project-top-meta">
+                    <span class="project-index">03 — CREATIVE CAMPAIGN</span>
+                    <span class="project-year">2025</span>
+                  </div>
+                  <h3 class="project-title">AURAL WAVES</h3>
+                  <p class="project-desc">
+                    Generative audio-reactive installation with volumetric yellow laser beams cutting through pitch
+                    black exhibition halls, modulated in real-time via Web Audio API frequency analysis.
+                  </p>
+                  <div class="project-tech-tags">
+                    <span class="tag">Web Audio API</span>
+                    <span class="tag">Custom Shaders</span>
+                    <span class="tag">TouchDesigner</span>
+                    <span class="tag">GLSL</span>
+                  </div>
+                  <div class="project-actions">
+                    <button class="project-modal-trigger-btn" data-project-id="neural">
+                      <span>VIEW CASE STUDY</span>
+                      <span class="btn-arrow">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 04: CHRONOS VOID -->
+            <article class="project-panel" data-project="chronos">
+              <div class="project-panel-inner">
+                <div class="project-media-col">
+                  <div class="project-image-box">
+                    <img src="assets/project_chronos.jpg" alt="Chronos Void Atmospheric Landscape Study"
+                      class="project-img" loading="lazy">
+                    <div class="project-image-vignette" aria-hidden="true"></div>
+                    <div class="project-image-badge">04 / EDITORIAL</div>
+                  </div>
+                </div>
+                <div class="project-info-col">
+                  <div class="project-top-meta">
+                    <span class="project-index">04 — INTERACTIVE EXPERIENCE</span>
+                    <span class="project-year">2025</span>
+                  </div>
+                  <h3 class="project-title">CHRONOS VOID</h3>
+                  <p class="project-desc">
+                    An ambient photographic study examining the intersection of golden hour illumination, historic
+                    Kolkata monuments, and real-time atmospheric particle simulation.
+                  </p>
+                  <div class="project-tech-tags">
+                    <span class="tag">Photography</span>
+                    <span class="tag">Color Grading</span>
+                    <span class="tag">Parallax Stage</span>
+                    <span class="tag">Editorial CSS</span>
+                  </div>
+                  <div class="project-actions">
+                    <button class="project-modal-trigger-btn" data-project-id="chronos">
+                      <span>VIEW CASE STUDY</span>
+                      <span class="btn-arrow">→</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           CONTACT SECTION (Dramatic Finale)
+           ============================================== -->
+      <section id="contact" class="contact-section section-padding" aria-label="Contact Sagnik">
+        <div class="section-container">
+          <div class="contact-editorial-header">
+            <span class="header-prefix">// 04 GET IN TOUCH</span>
+            <h2 class="contact-massive-title">
+              LET'S<br>
+              CREATE<br>
+              <span class="text-neon-yellow">SOMETHING.</span>
+            </h2>
+            <p class="contact-subhead">
+              HAVE A PROJECT IN MIND, A BOLD CONCEPT, OR WANT TO COLLABORATE ON SOMETHING EXTRAORDINARY?
+            </p>
+          </div>
+
+          <div class="contact-layout-grid">
+            <!-- Left Contact Information & Direct Channels -->
+            <div class="contact-info-col">
+              <div class="contact-card">
+                <span class="card-label">// DIRECT DISPATCH</span>
+                <div class="email-action-row">
+                  <a href="mailto:sagnik.creative@gmail.com" class="direct-email-link" id="direct-email-link">
+                    sagnik.creative@gmail.com
+                  </a>
+                  <button id="copy-email-btn" class="copy-pill-btn" aria-label="Copy email to clipboard">
+                    <span id="copy-text">COPY EMAIL</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="contact-card">
+                <span class="card-label">// SOCIAL ECOSYSTEM</span>
+                <div class="social-links-grid">
+                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-anchor">
+                    <span class="social-name">GITHUB</span>
+                    <span class="social-arrow">↗</span>
+                  </a>
+                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-anchor">
+                    <span class="social-name">LINKEDIN</span>
+                    <span class="social-arrow">↗</span>
+                  </a>
+                  <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="social-anchor">
+                    <span class="social-name">TWITTER / X</span>
+                    <span class="social-arrow">↗</span>
+                  </a>
+                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-anchor">
+                    <span class="social-name">INSTAGRAM</span>
+                    <span class="social-arrow">↗</span>
+                  </a>
+                  <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" class="social-anchor">
+                    <span class="social-name">DRIBBBLE</span>
+                    <span class="social-arrow">↗</span>
+                  </a>
+                  <a href="https://readcv.com" target="_blank" rel="noopener noreferrer" class="social-anchor">
+                    <span class="social-name">READ.CV</span>
+                    <span class="social-arrow">↗</span>
+                  </a>
+                </div>
+              </div>
+
+              <div class="contact-card">
+                <span class="card-label">// LOCATION & AVAILABILITY</span>
+                <div class="location-status-row">
+                  <div class="location-detail">
+                    <span class="city">KOLKATA, INDIA</span>
+                    <span class="coords">22.5726° N, 88.3639° E</span>
+                  </div>
+                  <div class="availability-pill">
+                    <span class="pulse-dot"></span>
+                    <span class="avail-txt">GLOBAL REMOTE COMMISSIONS</span>
+                  </div>
+                </div>
+                <div class="time-clock-display">
+                  <span class="clock-label">LOCAL TIME:</span>
+                  <span id="ist-live-clock" class="clock-time">--:--:-- IST</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Interactive Inquiry Form -->
+            <div class="contact-form-col">
+              <form id="contact-form" class="cinematic-form" novalidate>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="form-name" class="form-label">// 01 YOUR NAME *</label>
+                    <input type="text" id="form-name" name="name" class="form-input" placeholder="e.g. Elena Rostova"
+                      required>
+                    <span class="field-error" id="name-error"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="form-email" class="form-label">// 02 YOUR EMAIL *</label>
+                    <input type="email" id="form-email" name="email" class="form-input"
+                      placeholder="e.g. elena@studio.design" required>
+                    <span class="field-error" id="email-error"></span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">// 03 PROJECT SCOPE / BUDGET (USD)</label>
+                  <div class="budget-selector-pills">
+                    <label class="budget-pill">
+                      <input type="radio" name="budget" value="$5k - $10k">
+                      <span>$5K – $10K</span>
+                    </label>
+                    <label class="budget-pill">
+                      <input type="radio" name="budget" value="$10k - $25k" checked>
+                      <span>$10K – $25K</span>
+                    </label>
+                    <label class="budget-pill">
+                      <input type="radio" name="budget" value="$25k+">
+                      <span>$25K+ ENTERPRISE</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="form-message" class="form-label">// 04 TELL ME ABOUT THE VISION *</label>
+                  <textarea id="form-message" name="message" class="form-textarea" rows="4"
+                    placeholder="Briefly describe the challenge, aesthetic ambition, and timeline..."
+                    required></textarea>
+                  <span class="field-error" id="message-error"></span>
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" id="form-submit-btn" class="form-submit-cta">
+                    <span class="btn-text">TRANSMIT INQUIRY</span>
+                    <span class="btn-icon">→</span>
+                  </button>
+                  <div id="form-feedback-message" class="form-feedback-msg" aria-live="polite"></div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================================
+           MINIMAL FOOTER
+           ============================================== -->
+      <footer class="site-footer" aria-label="Footer">
+        <div class="footer-container">
+          <div class="footer-left">
+            <span class="footer-copy">© 2026 SAGNIK. ALL RIGHTS RESERVED.</span>
+            <span class="footer-creator">DESIGNED & DEVELOPED BY SAGNIK</span>
+          </div>
+
+          <div class="footer-center">
+            <span class="footer-tagline">BUILT WITH VANILLA CSS & GLSL ACCELERATION</span>
+          </div>
+
+          <div class="footer-right">
+            <a href="#hero" class="back-to-top-btn" id="back-to-top-btn" aria-label="Back to top of page">
+              <span>BACK TO TOP</span>
+              <span class="top-arrow">↑</span>
+            </a>
+          </div>
+        </div>
+      </footer>
+
+    </div><!-- /#smooth-content -->
+  </main><!-- /#smooth-wrapper -->
+
+  <!-- ==============================================
+       INTERACTIVE PROJECT MODAL (Case Study Viewer)
+       ============================================== -->
+  <div id="project-modal" class="project-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-window">
+      <button id="modal-close-btn" class="modal-close-btn" aria-label="Close modal">✕</button>
+      <div class="modal-scrollable-content">
+        <div class="modal-hero-cover">
+          <img id="modal-img" src="" alt="Project Preview" class="modal-cover-img">
+          <div class="modal-hero-overlay" aria-hidden="true"></div>
+          <div class="modal-badge-row">
+            <span id="modal-index" class="modal-index-tag">01 / BRAND</span>
+            <span id="modal-year" class="modal-year-tag">2026</span>
+          </div>
+        </div>
+        <div class="modal-body-container">
+          <h3 id="modal-title" class="modal-title-heading">PROJECT TITLE</h3>
+          <p id="modal-category-desc" class="modal-meta-lead">Category & Summary</p>
+
+          <div class="modal-details-grid">
+            <div class="modal-main-text">
+              <h4 class="modal-subheading">// ARCHITECTURAL CHALLENGE & EXECUTION</h4>
+              <p id="modal-full-desc" class="modal-p">Project in-depth description...</p>
+
+              <h4 class="modal-subheading">// KEY HIGHLIGHTS</h4>
+              <ul id="modal-highlights" class="modal-highlights-list">
+                <!-- Injected via JS -->
+              </ul>
+            </div>
+            <div class="modal-sidebar">
+              <div class="modal-info-block">
+                <span class="modal-sidebar-label">TECHNOLOGY STACK</span>
+                <div id="modal-tags" class="modal-tag-cloud">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+              <div class="modal-info-block">
+                <span class="modal-sidebar-label">CLIENT / INITIATIVE</span>
+                <span id="modal-client" class="modal-sidebar-val">GLOBAL COMMISSION</span>
+              </div>
+              <div class="modal-info-block">
+                <span class="modal-sidebar-label">PERFORMANCE RATING</span>
+                <span class="modal-sidebar-val text-neon-yellow">60 FPS · 100 LIGHTHOUSE</span>
+              </div>
+              <div class="modal-cta-row">
+                <button class="modal-demo-btn" id="modal-demo-btn">
+                  <span>LAUNCH PROTOTYPE</span>
+                  <span>↗</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Hero Section with Background Image -->
-    <div class="hero">
-        <div class="overlay"></div>
-        <div class="content">
-            <!-- Animated Line -->
-            <h1>Hello, I'm <span class="animated-text">Sagnik Adhikary</span></h1>
-            <p>Electronics and Communication Engineering Student | Web Dev | Graphic Design |AI & ML Enthusiast</p>
-            <a href="#about" class="btn">Learn More</a>
-        </div>
-    </div>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="profile-container" data-aos="fade-up">
-                <img src="profilePic.jpeg" alt="Sagnik Adhikary" class="profile-pic">
-                <div class="profile-text">
-                    <h2>About Me</h2>
-                    <p>I am Sagnik Adhikary, currently pursuing Electronics and Communication Engineering. I'm a core team member of <strong>GDG on-campus FIEM</strong> and core committee member of <strong>Xplorica</strong>, the official tech club of Future Institute of Engineering and Management. I specialize in Graphics Design and enjoy exploring AI and ML as an enthusiast. I’m passionate about building web solutions and diving into new technologies.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2>My Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card" data-aos="fade-up">
-                    <h3>Graphics Design</h3>
-                    <p>I am passionate about graphic design.</p>
-                </div>
-                <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
-                    <h3>AI & ML Enthusiast</h3>
-                    <p>Exploring intelligent systems and AI-driven projects as an enthusiast.</p>
-                </div>
-                <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
-                    <h3>Web Development</h3>
-                    <p>Skilled in front-end and back-end web development to create dynamic websites.</p>
-                </div>
-                <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
-                    <h3>Programming</h3>
-                    <p>Knowledge of Java, C, and Python for software development.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2>Projects</h2>
-            <div class="project-grid">
-                <div class="project-card" data-aos="zoom-in" data-aos-delay="100">
-                    <h3>Health Besh</h3>
-                    <p>Blockchain-based health tracking platform to assist patients and doctors.</p>
-                </div>
-                <div class="project-card" data-aos="zoom-in" data-aos-delay="200">
-                    <h3>Genomic Data Analysis</h3>
-                    <p>Tool for disease prediction using genetic data analysis.</p>
-                </div>
-                <div class="project-card" data-aos="zoom-in" data-aos-delay="300">
-                    <h3>Bus Tracking App</h3>
-                    <p>A web app for tracking local buses in real-time.</p>
-                </div>
-                <div class="project-card" data-aos="zoom-in" data-aos-delay="400">
-                    <h3>PetCareHub</h3>
-                    <p>Comprehensive platform for pet care, hospital info, and pet adoption.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Contact Me</h2>
-            <p>Let's connect! You can reach me via:</p>
-            <div class="contact-info">
-                <div class="contact-item" data-aos="fade-up">
-                    <i class="fas fa-envelope"></i>
-                    <a href="mailto:sagnik25tojo@gmail.com">sagnik25tojo@gmail.com</a>
-                </div>
-                <div class="contact-item" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-phone"></i>
-                    <span>Call : NaHi DuNgA</span>
-                </div>
-            </div>
-            <div class="social-links" data-aos="fade-up" data-aos-delay="200">
-                <a href="https://www.linkedin.com/in/sagnik-adhikary-9a5326273/"><i class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/sagnikishere"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-fiverr"></i></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Sagnik Adhikary. All rights reserved.</p>
-    </footer>
-
-    <!-- AOS Animation Script -->
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init();
-
-        // Dark mode toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const body = document.body;
-        const toggleIcon = themeToggle.querySelector('i');
-
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                toggleIcon.classList.remove('fa-moon');
-                toggleIcon.classList.add('fa-sun');
-            } else {
-                toggleIcon.classList.remove('fa-sun');
-                toggleIcon.classList.add('fa-moon');
-            }
-        });
-    </script>
+  <!-- Scripts -->
+  <script type="module" src="main.js"></script>
 </body>
+
 </html>
-
-
