@@ -333,9 +333,9 @@ button {
 }
 
 .brand-logo-img {
-  height: 42px;
+  height: 56px;
   width: auto;
-  max-width: 135px;
+  max-width: 180px;
   object-fit: contain;
   filter: drop-shadow(0 0 10px rgba(223, 255, 0, 0.25));
   transition: transform 0.4s var(--ease-cinematic), filter 0.3s ease;
@@ -1171,12 +1171,33 @@ button {
 
 .editorial-huge-title {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 8.5vw, 9.5rem);
+  font-size: clamp(3.6rem, 8.5vw, 7.8rem);
   font-weight: 800;
-  line-height: 0.88;
-  letter-spacing: -0.04em;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
   text-transform: uppercase;
   color: var(--text-primary);
+  margin-top: 0.4rem;
+}
+
+.section-tagline {
+  font-family: var(--font-mono);
+  font-size: clamp(0.76rem, 1.05vw, 0.88rem);
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  line-height: 1.7;
+  text-transform: uppercase;
+  max-width: 680px;
+  margin-top: 1.25rem;
+}
+
+.tagline-accent {
+  color: var(--neon-yellow);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  display: inline-block;
+  margin-right: 0.35rem;
+  text-shadow: 0 0 16px rgba(223, 255, 0, 0.3);
 }
 
 .text-stroke-yellow {
@@ -1207,11 +1228,67 @@ button {
   position: relative;
 }
 
+/* Interactive Photo Wrapper with Dynamic Glow */
 .about-photo-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 5;
   background-color: var(--bg-panel);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Ambient glow spotlight under mouse */
+.about-photo-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle at var(--about-spot-x, 50%) var(--about-spot-y, 50%), rgba(223, 255, 0, 0.35) 0%, rgba(223, 255, 0, 0.12) 35%, transparent 70%);
+  border-radius: 12px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: blur(20px);
+}
+
+.about-photo-wrapper:hover::before {
+  opacity: 1;
+}
+
+.photo-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 3px;
+  border: 1px solid var(--border-subtle);
+  background: #000;
+  transition: border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Default state: strictly BLACK & WHITE */
+.about-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(100%) contrast(1.18) brightness(0.9);
+  transition: filter 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: filter, transform;
+}
+
+/* Hover state: FULL COLOR + RADIANT GLOW */
+.about-photo-wrapper:hover .about-portrait-img {
+  filter: grayscale(0%) contrast(1.06) brightness(1.08) saturate(1.18);
+  transform: scale(1.035);
+}
+
+.about-photo-wrapper:hover .photo-container {
+  border-color: rgba(223, 255, 0, 0.7);
+  box-shadow: 0 0 40px rgba(223, 255, 0, 0.45), 0 0 85px rgba(223, 255, 0, 0.22), inset 0 0 25px rgba(223, 255, 0, 0.15);
 }
 
 .photo-accent-frame {
@@ -1220,41 +1297,31 @@ button {
   left: -12px;
   width: 100%;
   height: 100%;
-  border: 1px solid var(--border-yellow);
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Monochrome black & white initially */
   pointer-events: none;
   z-index: 1;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.photo-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  border: 1px solid var(--border-subtle);
-}
-
-.about-portrait-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  filter: contrast(1.04) brightness(0.98);
-  transition: filter 0.6s ease, transform 0.6s var(--ease-cinematic);
-}
-
-.about-photo-wrapper:hover .about-portrait-img {
-  filter: contrast(1.08) brightness(1.02);
-  transform: scale(1.03);
+.about-photo-wrapper:hover .photo-accent-frame {
+  border-color: var(--neon-yellow);
+  box-shadow: 0 0 25px rgba(223, 255, 0, 0.6), inset 0 0 15px rgba(223, 255, 0, 0.15);
+  transform: translate(6px, 6px);
 }
 
 .photo-yellow-vignette {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 60%, rgba(5, 5, 5, 0.85) 100%);
+  background: linear-gradient(180deg, transparent 50%, rgba(5, 5, 5, 0.65) 75%, rgba(5, 5, 5, 0.98) 92%, #050505 100%);
   pointer-events: none;
 }
 
-/* Badges on About Photo */
+/* Animated Floating Badges on About Photo */
+@keyframes badgeFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-7px); }
+}
+
 .about-badge-card {
   position: absolute;
   background: rgba(10, 10, 10, 0.88);
@@ -1269,12 +1336,15 @@ button {
   align-items: center;
   gap: 0.6rem;
   z-index: 2;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: grayscale(100%);
 }
 
 .badge-top {
   top: 1.5rem;
   right: -1.5rem;
   border-left: 2px solid var(--neon-yellow);
+  animation: badgeFloat 4s ease-in-out infinite alternate;
 }
 
 .badge-top .badge-num {
@@ -1286,6 +1356,13 @@ button {
   bottom: 2rem;
   left: -1.5rem;
   border-right: 2px solid var(--neon-yellow);
+  animation: badgeFloat 4.5s ease-in-out infinite alternate-reverse;
+}
+
+.about-photo-wrapper:hover .about-badge-card {
+  filter: grayscale(0%);
+  border-color: var(--neon-yellow);
+  box-shadow: 0 0 22px rgba(223, 255, 0, 0.35);
 }
 
 .status-indicator-dot {
@@ -1296,7 +1373,7 @@ button {
   box-shadow: 0 0 8px var(--neon-yellow);
 }
 
-/* Brand Monogram Box */
+/* Brand Monogram Box - B&W by default, glowing color on hover */
 .about-monogram-box {
   margin-top: 2.5rem;
   padding: 1.5rem;
@@ -1305,12 +1382,28 @@ button {
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: grayscale(90%);
+  opacity: 0.88;
+}
+
+.about-monogram-box:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  border-color: var(--neon-yellow);
+  box-shadow: 0 0 30px rgba(223, 255, 0, 0.25);
+  transform: translateY(-3px);
 }
 
 .about-crest-img {
   width: 60px;
   height: 60px;
   object-fit: contain;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-monogram-box:hover .about-crest-img {
+  transform: scale(1.08) rotate(2deg);
 }
 
 .crest-title {
@@ -1359,7 +1452,49 @@ button {
   color: var(--text-muted);
 }
 
-/* Pillars */
+/* About Stats Counter Row */
+.about-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin: 1.5rem 0 2.5rem 0;
+  padding: 1.5rem 1.8rem;
+  background: rgba(14, 14, 14, 0.85);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-stats-row:hover {
+  border-color: rgba(223, 255, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(223, 255, 0, 0.08);
+}
+
+.about-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  color: var(--neon-yellow);
+  line-height: 1;
+  text-shadow: 0 0 18px rgba(223, 255, 0, 0.35);
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+/* Pillars - Black & White by default, glowing neon yellow on hover */
 .pillars-container {
   display: flex;
   flex-direction: column;
@@ -1374,12 +1509,18 @@ button {
   background: rgba(255, 255, 255, 0.015);
   border: 1px solid var(--border-subtle);
   border-left: 2px solid var(--border-subtle);
-  transition: border-left-color 0.3s ease, background 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: grayscale(100%);
+  border-radius: 2px;
 }
 
 .pillar-item:hover {
+  filter: grayscale(0%);
   border-left-color: var(--neon-yellow);
-  background: rgba(223, 255, 0, 0.02);
+  border-color: rgba(223, 255, 0, 0.35);
+  background: rgba(223, 255, 0, 0.035);
+  box-shadow: 0 4px 25px rgba(223, 255, 0, 0.15);
+  transform: translateX(8px);
 }
 
 .pillar-num {
@@ -1387,6 +1528,11 @@ button {
   font-size: 0.85rem;
   color: var(--neon-yellow);
   font-weight: 700;
+  transition: text-shadow 0.3s ease;
+}
+
+.pillar-item:hover .pillar-num {
+  text-shadow: 0 0 12px var(--neon-yellow);
 }
 
 .pillar-info h4 {
@@ -1440,6 +1586,7 @@ button {
   gap: 0.8rem;
 }
 
+/* Social Pills - Black & White by default, glowing on hover */
 .social-pill-btn {
   display: inline-flex;
   align-items: center;
@@ -1453,15 +1600,19 @@ button {
   font-weight: 600;
   letter-spacing: 0.08em;
   color: var(--text-secondary);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: grayscale(100%);
+  opacity: 0.85;
 }
 
 .social-pill-btn:hover {
+  filter: grayscale(0%);
+  opacity: 1;
   background: rgba(223, 255, 0, 0.08);
-  border-color: var(--border-yellow);
+  border-color: var(--neon-yellow);
   color: var(--neon-yellow);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(223, 255, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(223, 255, 0, 0.3);
 }
 
 .social-svg {
@@ -1896,117 +2047,124 @@ button {
   gap: 1.5rem;
 }
 
-.wip-radar-system {
-  position: relative;
-  width: 170px;
-  height: 170px;
-  border-radius: 50%;
-  background: radial-gradient(circle at center, rgba(223, 255, 0, 0.08) 0%, transparent 70%);
+/* Work In Progress Hand-Drawn Sketch Showcase Module */
+.wip-sketch-col {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 340px;
 }
 
-.radar-ring {
+.wip-sketch-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  background: #000000;
+  border: 1px solid rgba(223, 255, 0, 0.35);
+  box-shadow: 0 0 35px rgba(223, 255, 0, 0.2), 0 20px 40px rgba(0, 0, 0, 0.85);
+  padding: 1.2rem;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.wip-sketch-wrapper:hover {
+  border-color: var(--neon-yellow);
+  box-shadow: 0 0 50px rgba(223, 255, 0, 0.45), 0 25px 50px rgba(0, 0, 0, 0.95);
+  transform: translateY(-4px) scale(1.02);
+}
+
+.wip-sketch-glow {
   position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(223, 255, 0, 0.2);
+  inset: -15px;
+  background: radial-gradient(circle at 50% 50%, rgba(223, 255, 0, 0.25) 0%, transparent 70%);
+  filter: blur(18px);
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity 0.5s ease;
 }
 
-.ring-outer {
+.wip-sketch-wrapper:hover .wip-sketch-glow {
+  opacity: 1;
+}
+
+.wip-sketch-frame {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000000;
+}
+
+.wip-sketch-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  filter: contrast(1.1) brightness(1.02);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wip-sketch-wrapper:hover .wip-sketch-img {
+  transform: scale(1.03);
+}
+
+/* Subtle laser / scanning pulse passing across the scribble loading bar */
+.wip-sketch-scanbeam {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  border-style: dashed;
-  animation: rotateCw 16s linear infinite;
+  background: linear-gradient(135deg, transparent 35%, rgba(223, 255, 0, 0.22) 50%, transparent 65%);
+  animation: sketchScanSweep 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
 }
 
-.ring-mid {
-  width: 72%;
-  height: 72%;
-  border-top-color: var(--neon-yellow);
-  border-bottom-color: var(--neon-yellow);
-  animation: rotateCcw 10s linear infinite;
+@keyframes sketchScanSweep {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
 }
 
-.ring-inner {
-  width: 44%;
-  height: 44%;
-  border-style: dotted;
-  border-color: rgba(223, 255, 0, 0.45);
-  animation: rotateCw 6s linear infinite;
-}
-
-.radar-sweep-beam {
-  position: absolute;
-  width: 50%;
-  height: 50%;
-  top: 0;
-  right: 0;
-  transform-origin: bottom left;
-  background: conic-gradient(from 0deg at 0% 100%, rgba(223, 255, 0, 0.45) 0deg, transparent 60deg);
-  animation: radarSpin 3.5s linear infinite;
-}
-
-.radar-core-dot {
-  width: 10px;
-  height: 10px;
-  background: var(--neon-yellow);
-  border-radius: 50%;
-  box-shadow: 0 0 15px var(--neon-yellow);
-  z-index: 2;
-  animation: coreBreathe 1.8s ease-in-out infinite alternate;
-}
-
-.radar-orbit-satellite {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: #ffffff;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #ffffff;
-  top: 12px;
-  left: 50%;
-  animation: orbitTrack 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@keyframes rotateCw { 100% { transform: rotate(360deg); } }
-@keyframes rotateCcw { 100% { transform: rotate(-360deg); } }
-@keyframes radarSpin { 100% { transform: rotate(360deg); } }
-@keyframes coreBreathe {
-  0% { transform: scale(0.85); box-shadow: 0 0 8px var(--neon-yellow); }
-  100% { transform: scale(1.3); box-shadow: 0 0 22px var(--neon-yellow); }
-}
-@keyframes orbitTrack {
-  0% { transform: rotate(0deg) translateX(70px) rotate(0deg); }
-  100% { transform: rotate(360deg) translateX(70px) rotate(-360deg); }
-}
-
-.wip-badge-pulse {
+/* "Good thing takes time" highlighted quote pill */
+.wip-quote-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  padding: 0.55rem 1.25rem;
   background: rgba(223, 255, 0, 0.08);
   border: 1px solid var(--border-yellow);
-  padding: 0.4rem 0.85rem;
   border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 700;
   letter-spacing: 0.12em;
   color: var(--neon-yellow);
+  text-shadow: 0 0 14px rgba(223, 255, 0, 0.4);
+  box-shadow: 0 0 20px rgba(223, 255, 0, 0.15);
+  animation: quoteGlowPulse 2.8s ease-in-out infinite alternate;
 }
 
-.pulse-beacon {
-  width: 6px;
-  height: 6px;
-  background: #ff4545;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #ff4545;
-  animation: beaconBlink 1.2s ease infinite;
+@keyframes quoteGlowPulse {
+  0% {
+    box-shadow: 0 0 15px rgba(223, 255, 0, 0.15);
+    border-color: rgba(223, 255, 0, 0.35);
+  }
+  100% {
+    box-shadow: 0 0 30px rgba(223, 255, 0, 0.4);
+    border-color: var(--neon-yellow);
+  }
 }
 
-@keyframes beaconBlink {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.3; transform: scale(0.8); }
+.quote-star {
+  color: var(--neon-yellow);
+  font-size: 0.85rem;
+}
+
+.quote-highlight {
+  text-transform: uppercase;
 }
 
 /* WIP Content Column */
@@ -2230,28 +2388,36 @@ button {
 
 /* ==========================================================================
    ESCAPE & TRIP STORIES SECTION (BEYOND THE CODE)
-   Background: assets/mysterious.png (Sagnik standing on the left side)
-   Requirement: Left clearance strictly ensures ZERO text touches the standing man.
+   Fixed background photo, fullscreen height, horizontal scrolling cards
    ========================================================================== */
 .passion-section,
 .escape-section {
   position: relative;
-  background-color: #050505;
-  overflow: hidden;
-  padding: 7rem 0 8rem 0;
-  min-height: 850px;
+  background-color: transparent; /* bg comes from the fixed backdrop */
+  overflow: visible;
+  min-height: 100vh;
+  z-index: 1;
+  isolation: isolate;
 }
 
-/* Dedicated Backdrop Stage: holds full photo with pinned top so head/hair is never cropped */
+/* Backdrop Stage: fixed so background stays still as content scrolls */
 .escape-backdrop-stage {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
   pointer-events: none;
-  z-index: 1;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  background: #050505;
+}
+
+.escape-section.bg-active .escape-backdrop-stage {
+  opacity: 1;
+  z-index: -1;
 }
 
 .escape-bg-photo {
@@ -2283,12 +2449,12 @@ button {
     );
 }
 
-/* Wide Container: provides generous space across the full screen */
+/* Wide Container: proper full-height padding */
 .escape-container {
   width: 100%;
   max-width: 1650px;
   margin: 0 auto;
-  padding: 0 4rem 0 2rem;
+  padding: 8rem 4rem 6rem 2rem;
   position: relative;
   z-index: 2;
 }
@@ -2320,14 +2486,30 @@ button {
   z-index: 2;
 }
 
+/* Scroll hint label */
+.escape-scroll-hint {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 0.5rem;
+  animation: hintPulse 2s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
 .escape-header {
   margin-bottom: 0;
 }
 
 .escape-huge-title {
-  font-size: clamp(2.6rem, 4.2vw, 4.2rem);
-  line-height: 1.05;
-  letter-spacing: 0.04em;
+  font-size: clamp(3.4rem, 7.5vw, 6.8rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
 }
 
 /* Collab Invitation Banner */
@@ -2556,6 +2738,39 @@ button {
 .escape-stories-grid {
   grid-template-columns: repeat(2, 1fr);
   gap: 1.8rem;
+}
+
+/* Horizontal Scroll Track for Trip Stories */
+.escape-hscroll-track {
+  display: flex;
+  gap: 1.8rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(223,255,0,0.3) transparent;
+  padding-bottom: 1rem;
+  cursor: grab;
+  touch-action: pan-x;
+  user-select: none;
+}
+.escape-hscroll-track:active {
+  cursor: grabbing;
+}
+.escape-hscroll-track::-webkit-scrollbar {
+  height: 4px;
+}
+.escape-hscroll-track::-webkit-scrollbar-track {
+  background: transparent;
+}
+.escape-hscroll-track::-webkit-scrollbar-thumb {
+  background: rgba(223,255,0,0.35);
+  border-radius: 2px;
+}
+.escape-hscroll-track .trip-story-card {
+  flex: 0 0 clamp(280px, 38vw, 460px);
+  scroll-snap-align: start;
 }
 
 .trip-stats-pills {
@@ -3664,28 +3879,41 @@ button {
     max-width: 480px;
     margin: 0 auto;
   }
-  /* Mobile Escape Section: The standing man is showcased clearly at the top with NO text over him */
+  /* Mobile Escape Section: Background photo stays firmly as a background behind content */
   .passion-section,
   .escape-section {
-    padding: 0 0 4rem 0;
+    padding: 5rem 0 4rem 0;
+    position: relative;
+    overflow: hidden;
   }
   .escape-backdrop-stage {
-    position: relative;
-    height: 380px;
+    position: absolute;
+    inset: 0;
     width: 100%;
+    height: 100%;
+    opacity: 1 !important;
+    z-index: 0;
+    pointer-events: none;
   }
   .escape-bg-photo {
-    position: relative;
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: left 5%;
+    object-position: center 15%;
+    opacity: 0.32;
+    filter: brightness(0.65) contrast(1.15);
   }
   .escape-vignette-scrim {
-    background: linear-gradient(to bottom, #050505 0%, transparent 15%, transparent 75%, #050505 100%);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(5, 5, 5, 0.94) 0%, rgba(5, 5, 5, 0.72) 20%, rgba(5, 5, 5, 0.85) 60%, #050505 100%);
   }
   .escape-container {
     padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
   }
   .escape-layout-grid {
     grid-template-columns: 1fr;
@@ -3703,7 +3931,7 @@ button {
     text-align: center;
     gap: 2.5rem;
   }
-  .wip-hologram-col {
+  .wip-sketch-col {
     margin: 0 auto;
   }
   .wip-content-col {

@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Interactive Hover Targets
   const interactiveElements = document.querySelectorAll(
-    'a, button, .skill-pill, .tech-badge, input, textarea, .trip-story-card, .passion-collab-card'
+    'a, button, .skill-pill, .tech-badge, input, textarea, .trip-story-card, .passion-collab-card, .about-photo-wrapper, .pillar-item, .about-monogram-box, .social-pill-btn, .about-stat-item, .wip-sketch-wrapper'
   );
 
   interactiveElements.forEach((el) => {
@@ -308,6 +308,88 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
+  // 6B. ABOUT ME INTERACTIVE 3D TILT, VOLUMETRIC SPOTLIGHT & STATS COUNTER
+  // =========================================================================
+  const aboutPhotoWrapper = document.getElementById('about-photo-wrapper');
+  if (aboutPhotoWrapper) {
+    let aboutTiltX = 0;
+    let aboutTiltY = 0;
+    let targetAboutTiltX = 0;
+    let targetAboutTiltY = 0;
+    let isHoveringPhoto = false;
+
+    aboutPhotoWrapper.addEventListener('mousemove', (e) => {
+      isHoveringPhoto = true;
+      const rect = aboutPhotoWrapper.getBoundingClientRect();
+      const xPct = ((e.clientX - rect.left) / rect.width) * 100;
+      const yPct = ((e.clientY - rect.top) / rect.height) * 100;
+      aboutPhotoWrapper.style.setProperty('--about-spot-x', `${xPct.toFixed(1)}%`);
+      aboutPhotoWrapper.style.setProperty('--about-spot-y', `${yPct.toFixed(1)}%`);
+
+      // Ultra-smooth lerped 3D tilt
+      targetAboutTiltX = ((e.clientY - rect.top) / rect.height - 0.5) * -12;
+      targetAboutTiltY = ((e.clientX - rect.left) / rect.width - 0.5) * 12;
+    });
+
+    aboutPhotoWrapper.addEventListener('mouseleave', () => {
+      isHoveringPhoto = false;
+      targetAboutTiltX = 0;
+      targetAboutTiltY = 0;
+      aboutPhotoWrapper.style.setProperty('--about-spot-x', '50%');
+      aboutPhotoWrapper.style.setProperty('--about-spot-y', '50%');
+    });
+
+    function renderAboutTilt() {
+      aboutTiltX += (targetAboutTiltX - aboutTiltX) * 0.1;
+      aboutTiltY += (targetAboutTiltY - aboutTiltY) * 0.1;
+
+      if (isHoveringPhoto || Math.abs(aboutTiltX) > 0.05 || Math.abs(aboutTiltY) > 0.05) {
+        aboutPhotoWrapper.style.transform = `perspective(900px) rotateX(${aboutTiltX.toFixed(2)}deg) rotateY(${aboutTiltY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+      } else {
+        aboutPhotoWrapper.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      }
+      requestAnimationFrame(renderAboutTilt);
+    }
+    requestAnimationFrame(renderAboutTilt);
+  }
+
+  // Animated Numbers Counter for About Me Stats
+  const aboutStatsContainer = document.getElementById('about-stats-counter');
+  let aboutStatsAnimated = false;
+  if (aboutStatsContainer) {
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !aboutStatsAnimated) {
+          aboutStatsAnimated = true;
+          const statItems = aboutStatsContainer.querySelectorAll('.stat-number');
+          statItems.forEach((statEl) => {
+            const targetVal = parseInt(statEl.getAttribute('data-target') || '0', 10);
+            const originalText = statEl.textContent;
+            const hasPlus = originalText.includes('+');
+            const hasPct = originalText.includes('%');
+            let current = 0;
+            const duration = 1500;
+            const stepMs = Math.max(25, Math.floor(duration / (targetVal || 1)));
+
+            const timer = setInterval(() => {
+              current += Math.max(1, Math.ceil(targetVal / 25));
+              if (current >= targetVal) {
+                current = targetVal;
+                clearInterval(timer);
+              }
+              let displayVal = current < 10 && !hasPct ? `0${current}` : `${current}`;
+              if (hasPlus) displayVal += '+';
+              if (hasPct) displayVal += '%';
+              statEl.textContent = displayVal;
+            }, stepMs);
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+    statsObserver.observe(aboutStatsContainer);
+  }
+
+  // =========================================================================
   // 7. ULTRA SMOOTH SKILLS MATRIX & INTERACTIVE HUD
   // =========================================================================
   const skillCategoryButtons = document.querySelectorAll('.cat-tab-btn');
@@ -392,11 +474,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const wipBarFill = document.getElementById('wip-bar-fill');
 
   const statusMessages = [
+    '> GOOD THING TAKES TIME...',
+    '> 95% COMPLETED — FINALIZING POLISH...',
     '> DEPLOYING FULL-STACK & GRAPHIC ASSETS...',
     '> COMPILING HIGH-PERFORMANCE WEB APPS...',
     '> POLISHING BRAND IDENTITY & LOGO ASSETS...',
-    '> PREPARING INTERACTIVE 60FPS DEMOS...',
-    '> OPTIMIZING RESPONSIVE USER INTERFACES...'
+    '> PREPARING INTERACTIVE 60FPS DEMOS...'
   ];
 
   let statusMsgIndex = 0;
@@ -557,4 +640,53 @@ document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   });
+
+  // =========================================================================
+  // ESCAPE SECTION — Fixed background activation + drag-scroll on cards
+  // =========================================================================
+  const escapeSection = document.getElementById('passion');
+
+  // Toggle bg-active class so the fixed backdrop fades in/out
+  if (escapeSection) {
+    const escapeObserver = new IntersectionObserver(
+      ([entry]) => {
+        escapeSection.classList.toggle('bg-active', entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    escapeObserver.observe(escapeSection);
+  }
+
+  // Mouse drag-to-scroll for horizontal trip cards track
+  const hscroll = document.getElementById('escape-hscroll');
+  if (hscroll) {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    hscroll.addEventListener('mousedown', (e) => {
+      isDown = true;
+      hscroll.style.cursor = 'grabbing';
+      startX = e.pageX - hscroll.offsetLeft;
+      scrollLeft = hscroll.scrollLeft;
+      if (lenis) lenis.stop();
+    });
+    hscroll.addEventListener('mouseleave', () => {
+      if (isDown && lenis) lenis.start();
+      isDown = false;
+      hscroll.style.cursor = 'grab';
+    });
+    hscroll.addEventListener('mouseup', () => {
+      if (lenis) lenis.start();
+      isDown = false;
+      hscroll.style.cursor = 'grab';
+    });
+    hscroll.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - hscroll.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      hscroll.scrollLeft = scrollLeft - walk;
+    });
+  }
 });
