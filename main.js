@@ -74,18 +74,15 @@ document.addEventListener('DOMContentLoaded', () => {
   let mouseY = window.innerHeight / 2;
   let cursorX = mouseX;
   let cursorY = mouseY;
-  let isMouseMoving = false;
   let lastMoveTime = Date.now();
 
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     lastMoveTime = Date.now();
-    isMouseMoving = true;
   }, { passive: true });
 
   function updateCursor() {
-    // Lerp cursor ring position smoothly
     cursorX += (mouseX - cursorX) * 0.18;
     cursorY += (mouseY - cursorY) * 0.18;
 
@@ -96,9 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   requestAnimationFrame(updateCursor);
 
-  // Interactive Hover Targets for Cursor Expansion & Audio Blips
+  // Interactive Hover Targets
   const interactiveElements = document.querySelectorAll(
-    'a, button, .skill-pill, .budget-pill, input, textarea, .mode-btn'
+    'a, button, .skill-pill, .tech-badge, input, textarea, .trip-story-card, .passion-collab-card'
   );
 
   interactiveElements.forEach((el) => {
@@ -111,9 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Project Panels trigger "VIEW" label
-  const projectBoxes = document.querySelectorAll('.project-image-box, .project-panel');
-  projectBoxes.forEach((el) => {
+  // Trip story cards trigger "VIEW" label on cursor
+  const tripCards = document.querySelectorAll('.trip-story-card');
+  tripCards.forEach((el) => {
     el.addEventListener('mouseenter', () => {
       cursor?.classList.add('cursor-view');
     });
@@ -128,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const portraitStage = document.getElementById('hero-portrait-stage');
   const portraitReveal = document.getElementById('portrait-reveal-img');
   const portraitBase = document.getElementById('portrait-base-img');
-  const spotlightBeam = document.getElementById('spotlight-beam');
   const bgTypographyRows = document.querySelectorAll('.hero-text-row');
 
   let spotCurrentX = 50;
@@ -141,26 +137,22 @@ document.addEventListener('DOMContentLoaded', () => {
   let tiltTargetX = 0;
   let tiltTargetY = 0;
 
-  // Track coordinates relative to portrait stage
   window.addEventListener('mousemove', (e) => {
     if (!portraitStage) return;
     const rect = portraitStage.getBoundingClientRect();
 
-    // Spot coordinates as percentage inside stage
     const relX = ((e.clientX - rect.left) / rect.width) * 100;
     const relY = ((e.clientY - rect.top) / rect.height) * 100;
 
     spotTargetX = Math.max(0, Math.min(100, relX));
     spotTargetY = Math.max(0, Math.min(100, relY));
 
-    // Parallax tilt from screen center (-1 to 1)
     const normX = (e.clientX / window.innerWidth) * 2 - 1;
     const normY = (e.clientY / window.innerHeight) * 2 - 1;
     tiltTargetX = normX;
     tiltTargetY = normY;
   }, { passive: true });
 
-  // Touch screen support for flashlight
   window.addEventListener('touchmove', (e) => {
     if (!portraitStage || !e.touches[0]) return;
     const touch = e.touches[0];
@@ -178,21 +170,18 @@ document.addEventListener('DOMContentLoaded', () => {
     lastMoveTime = Date.now();
   }, { passive: true });
 
-  // Smooth spotlight & parallax render loop
   let idleAngle = 0;
   function renderHeroStage() {
-    const isIdle = Date.now() - lastMoveTime > 3200;
+    const isIdle = Date.now() - lastMoveTime > 3000;
 
     if (isIdle) {
-      // Gentle automatic organic sweep when idle or on mobile load
       idleAngle += 0.012;
-      spotTargetX = 50 + Math.cos(idleAngle) * 24;
-      spotTargetY = 42 + Math.sin(idleAngle * 1.6) * 20;
-      tiltTargetX = Math.cos(idleAngle) * 0.25;
-      tiltTargetY = Math.sin(idleAngle) * 0.2;
+      spotTargetX = 50 + Math.cos(idleAngle) * 22;
+      spotTargetY = 42 + Math.sin(idleAngle * 1.5) * 18;
+      tiltTargetX = Math.cos(idleAngle) * 0.2;
+      tiltTargetY = Math.sin(idleAngle) * 0.15;
     }
 
-    // Smooth Lerp (0.08 factor for silky flashlight inertia)
     spotCurrentX += (spotTargetX - spotCurrentX) * 0.08;
     spotCurrentY += (spotTargetY - spotCurrentY) * 0.08;
 
@@ -200,48 +189,24 @@ document.addEventListener('DOMContentLoaded', () => {
     tiltCurrentY += (tiltTargetY - tiltCurrentY) * 0.06;
 
     if (portraitStage) {
-      // Update CSS custom properties for radial mask & flashlight beam
       portraitStage.style.setProperty('--spot-x', `${spotCurrentX.toFixed(2)}%`);
       portraitStage.style.setProperty('--spot-y', `${spotCurrentY.toFixed(2)}%`);
 
-      // 3D Parallax tilt on portrait
-      const portraitTilt = `perspective(1000px) rotateY(${(tiltCurrentX * 7).toFixed(2)}deg) rotateX(${(-tiltCurrentY * 7).toFixed(2)}deg) translate3d(${(-tiltCurrentX * 12).toFixed(1)}px, ${(-tiltCurrentY * 12).toFixed(1)}px, 0)`;
+      const portraitTilt = `perspective(1000px) rotateY(${(tiltCurrentX * 6).toFixed(2)}deg) rotateX(${(-tiltCurrentY * 6).toFixed(2)}deg) translate3d(${(-tiltCurrentX * 10).toFixed(1)}px, ${(-tiltCurrentY * 10).toFixed(1)}px, 0)`;
       if (portraitReveal) portraitReveal.style.transform = portraitTilt;
       if (portraitBase) portraitBase.style.transform = portraitTilt;
     }
 
-    // Deep parallax on oversized background typography
     bgTypographyRows.forEach((row) => {
       const speed = parseFloat(row.querySelector('span')?.getAttribute('data-parallax') || '0.1');
-      const offsetX = (tiltCurrentX * 50 * speed).toFixed(1);
-      const offsetY = (tiltCurrentY * 35 * speed).toFixed(1);
+      const offsetX = (tiltCurrentX * 45 * speed).toFixed(1);
+      const offsetY = (tiltCurrentY * 30 * speed).toFixed(1);
       row.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
     });
 
     requestAnimationFrame(renderHeroStage);
   }
   requestAnimationFrame(renderHeroStage);
-
-  // Portrait Switcher Toggle
-  const togglePortraitBtn = document.getElementById('toggle-portrait-style');
-  const modeTags = document.querySelectorAll('.portrait-mode-pill .mode-tag');
-
-  if (togglePortraitBtn) {
-    let currentMode = 'editorial';
-    togglePortraitBtn.addEventListener('click', () => {
-      currentMode = currentMode === 'editorial' ? 'photographic' : 'editorial';
-      const targetSrc = currentMode === 'editorial'
-        ? 'assets/portrait_cutout_ref.png'
-        : 'assets/portrait_real_enhanced.png';
-
-      if (portraitReveal) portraitReveal.src = targetSrc;
-      if (portraitBase) portraitBase.src = targetSrc;
-
-      modeTags.forEach((tag) => {
-        tag.classList.toggle('active', tag.getAttribute('data-mode') === currentMode);
-      });
-    });
-  }
 
   // =========================================================================
   // 6. CINEMATIC PAGE TRANSITIONS & NAVIGATION
@@ -322,11 +287,13 @@ document.addEventListener('DOMContentLoaded', () => {
   function openMobileMenu() {
     mobileMenuDrawer?.classList.add('open');
     menuToggleBtn?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
   }
 
   function closeMobileMenu() {
     mobileMenuDrawer?.classList.remove('open');
     menuToggleBtn?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
   }
 
   menuToggleBtn?.addEventListener('click', openMobileMenu);
@@ -336,53 +303,12 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeMobileMenu();
-      closeModal();
+      closeSuccessModal();
     }
   });
 
   // =========================================================================
-  // 7. STATS COUNTER ANIMATION (About Section)
-  // =========================================================================
-  const statNumbers = document.querySelectorAll('.stat-number');
-  let statsTriggered = false;
-
-  const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && !statsTriggered) {
-        statsTriggered = true;
-        statNumbers.forEach((stat) => {
-          const targetStr = stat.getAttribute('data-target') || '0';
-          const target = parseInt(targetStr, 10);
-          const plusSpan = stat.querySelector('.stat-plus');
-          const plusChar = plusSpan ? plusSpan.textContent : '';
-
-          let count = 0;
-          const duration = 1600;
-          const startTime = performance.now();
-
-          function step(now) {
-            const progress = Math.min((now - startTime) / duration, 1);
-            // Ease out cubic
-            const ease = 1 - Math.pow(1 - progress, 3);
-            const val = Math.floor(ease * target);
-            const formatted = val < 10 && target < 10 ? `0${val}` : val;
-            stat.innerHTML = `${formatted}<span class="stat-plus">${plusChar}</span>`;
-
-            if (progress < 1) {
-              requestAnimationFrame(step);
-            }
-          }
-          requestAnimationFrame(step);
-        });
-      }
-    });
-  }, { threshold: 0.3 });
-
-  const statsRow = document.querySelector('.editorial-stats-row');
-  if (statsRow) statsObserver.observe(statsRow);
-
-  // =========================================================================
-  // 8. SKILLS MATRIX & LIVE AUDIT HUD
+  // 7. ULTRA SMOOTH SKILLS MATRIX & INTERACTIVE HUD
   // =========================================================================
   const skillCategoryButtons = document.querySelectorAll('.cat-tab-btn');
   const disciplinePanels = document.querySelectorAll('.skill-discipline-panel');
@@ -392,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const hudSkillDesc = document.getElementById('hud-skill-desc');
   const hudSkillExp = document.getElementById('hud-skill-exp');
 
-  // Category Filtering
+  // Category Filtering with Smooth Transition
   skillCategoryButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       skillCategoryButtons.forEach((b) => b.classList.remove('active'));
@@ -402,6 +328,11 @@ document.addEventListener('DOMContentLoaded', () => {
       disciplinePanels.forEach((panel) => {
         if (filter === 'all' || panel.getAttribute('data-category') === filter) {
           panel.style.display = 'flex';
+          panel.style.opacity = '0';
+          setTimeout(() => {
+            panel.style.transition = 'opacity 0.4s ease';
+            panel.style.opacity = '1';
+          }, 10);
         } else {
           panel.style.display = 'none';
         }
@@ -428,136 +359,72 @@ document.addEventListener('DOMContentLoaded', () => {
     pill.addEventListener('click', updateHud);
   });
 
-  // =========================================================================
-  // 9. SELECTED PROJECTS & INTERACTIVE CASE STUDY MODAL
-  // =========================================================================
-  const projectDatabase = {
-    lumen: {
-      title: 'KINETIC LUMEN',
-      category: '01 — BRAND EXPERIENCE & SPATIAL WEBGL',
-      year: '2026',
-      img: 'assets/project_lumen.jpg',
-      client: 'KINETIC ARCHITECTS / AURA COLLABORATIVE',
-      desc: 'An architectural brand experience merging geometric 3D monoliths with real-time neon raymarching shaders. Engineered for spatial luxury and interactive discovery, featuring continuous camera interpolation, depth-of-field post-processing, and multi-tier lighting models running at a locked 60 FPS.',
-      highlights: [
-        'Custom GLSL raymarching shader generating volumetric neon yellow illumination along faceted monolith edges.',
-        'Zero layout shifts with responsive WebGL viewport scaling across ultra-wide, desktop, and mobile displays.',
-        'Seamless scroll-driven camera choreography powered by GSAP timeline bindings and Lenis smooth momentum.'
-      ],
-      tags: ['WebGL', 'Three.js', 'GLSL Shaders', 'GSAP', 'Vite', 'Custom Audio']
-    },
-    aura: {
-      title: 'ONYX & LUMINAR',
-      category: '02 — HIGH FASHION DIGITAL SHOWCASE',
-      year: '2025',
-      img: 'assets/project_aura.jpg',
-      client: 'LUMINAR EDITORIAL / MILAN PARIS',
-      desc: 'A futuristic digital runway showcase where fluid chrome and sculptural textiles react organically to cursor velocity. High-contrast neon yellow rim illumination on deep matte obsidian surfaces evokes experimental haute couture and high-tech digital craft.',
-      highlights: [
-        'Interactive fluid particle mesh mimicking aerodynamic cloth drape and reactive chrome specular highlights.',
-        'Editorial typography grid inspired by Swiss brutalism and avant-garde luxury magazines.',
-        'Sub-1.2s first contentful paint utilizing progressive texture streaming and AVIF compression.'
-      ],
-      tags: ['Creative Direction', 'React', 'Canvas 2D', 'Lenis Scroll', 'Figma', 'Blender']
-    },
-    neural: {
-      title: 'AURAL WAVES',
-      category: '03 — AUDIO-REACTIVE GENERATIVE INSTALLATION',
-      year: '2025',
-      img: 'assets/project_neural.jpg',
-      client: 'DARKVOID GALLERY / LONDON',
-      desc: 'A generative audio-reactive installation with volumetric yellow laser beams cutting through pitch black exhibition halls. The system performs real-time Fast Fourier Transform (FFT) analysis on live spatial microphone inputs, projecting complex Lissajous waveforms across architectural spaces.',
-      highlights: [
-        'Custom Web Audio API analyzer pipeline processing 2048 FFT bins with negligible audio latency.',
-        'Dynamic laser beam divergence simulation rendered through custom GPU fragment passes.',
-        'Interactive frequency dashboard allowing visitors to modulate room resonances via mobile WebSockets.'
-      ],
-      tags: ['Web Audio API', 'Custom Shaders', 'TouchDesigner', 'GLSL', 'Canvas', 'WebGL']
-    },
-    chronos: {
-      title: 'CHRONOS VOID',
-      category: '04 — ATMOSPHERIC LANDSCAPE STUDY',
-      year: '2025',
-      img: 'assets/project_chronos.jpg',
-      client: 'INDEPENDENT PHOTOGRAMMETRY & MONUMENT ARCHIVE',
-      desc: 'An ambient photographic study examining the intersection of golden hour illumination, historic Kolkata monuments, and real-time atmospheric particle simulation. Incorporates authentic high-resolution field photography captured during twilight over the Maidan.',
-      highlights: [
-        'Multi-plane parallax depth mapping isolating historical Victoria Memorial contours and tree canopies.',
-        'Atmospheric yellow particulate drift mirroring natural dusk humidity and golden sun dispersal.',
-        'High dynamic range tone mapping calibrated for OLED and HDR digital display systems.'
-      ],
-      tags: ['Photography', 'Color Grading', 'Parallax Stage', 'Editorial CSS', 'Canvas 2D']
-    }
-  };
-
-  const projectModal = document.getElementById('project-modal');
-  const modalCloseBtn = document.getElementById('modal-close-btn');
-  const modalBackdrop = document.getElementById('modal-backdrop');
-  const modalImg = document.getElementById('modal-img');
-  const modalIndex = document.getElementById('modal-index');
-  const modalYear = document.getElementById('modal-year');
-  const modalTitle = document.getElementById('modal-title');
-  const modalCatDesc = document.getElementById('modal-category-desc');
-  const modalFullDesc = document.getElementById('modal-full-desc');
-  const modalHighlights = document.getElementById('modal-highlights');
-  const modalTags = document.getElementById('modal-tags');
-  const modalClient = document.getElementById('modal-client');
-  const modalDemoBtn = document.getElementById('modal-demo-btn');
-
-  function openProjectModal(projectId) {
-    const data = projectDatabase[projectId];
-    if (!data || !projectModal) return;
-
-    if (modalImg) modalImg.src = data.img;
-    if (modalIndex) modalIndex.textContent = data.category.split('—')[0].trim();
-    if (modalYear) modalYear.textContent = data.year;
-    if (modalTitle) modalTitle.textContent = data.title;
-    if (modalCatDesc) modalCatDesc.textContent = data.category;
-    if (modalFullDesc) modalFullDesc.textContent = data.desc;
-    if (modalClient) modalClient.textContent = data.client;
-
-    if (modalHighlights) {
-      modalHighlights.innerHTML = data.highlights
-        .map((h) => `<li>${h}</li>`)
-        .join('');
-    }
-
-    if (modalTags) {
-      modalTags.innerHTML = data.tags
-        .map((t) => `<span>${t}</span>`)
-        .join('');
-    }
-
-    projectModal.classList.add('active');
-    projectModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+  // Animate skill progress bars smoothly on scroll into view
+  const skillsSection = document.getElementById('skills');
+  let skillsAnimated = false;
+  if (skillsSection) {
+    const skillsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !skillsAnimated) {
+          skillsAnimated = true;
+          document.querySelectorAll('.skill-pill').forEach((pill) => {
+            const fill = pill.querySelector('.bar-fill');
+            const targetWidth = pill.getAttribute('data-exp') || '90%';
+            if (fill) {
+              fill.style.width = '0%';
+              setTimeout(() => {
+                fill.style.transition = 'width 1.2s cubic-bezier(0.2, 0.8, 0.2, 1)';
+                fill.style.width = targetWidth;
+              }, 150);
+            }
+          });
+        }
+      });
+    }, { threshold: 0.2 });
+    skillsObserver.observe(skillsSection);
   }
 
-  function closeModal() {
-    if (!projectModal) return;
-    projectModal.classList.remove('active');
-    projectModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
+  // =========================================================================
+  // 8. PROJECTS "WORK IN PROGRESS" DYNAMIC LOADING ANIMATION
+  // =========================================================================
+  const wipPctEl = document.getElementById('wip-numeric-pct');
+  const wipActionTxt = document.getElementById('wip-action-txt');
+  const wipBarFill = document.getElementById('wip-bar-fill');
 
-  document.querySelectorAll('.project-modal-trigger-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-project-id');
-      if (id) openProjectModal(id);
-    });
-  });
+  const statusMessages = [
+    '> DEPLOYING FULL-STACK & GRAPHIC ASSETS...',
+    '> COMPILING HIGH-PERFORMANCE WEB APPS...',
+    '> POLISHING BRAND IDENTITY & LOGO ASSETS...',
+    '> PREPARING INTERACTIVE 60FPS DEMOS...',
+    '> OPTIMIZING RESPONSIVE USER INTERFACES...'
+  ];
 
-  modalCloseBtn?.addEventListener('click', closeModal);
-  modalBackdrop?.addEventListener('click', closeModal);
+  let statusMsgIndex = 0;
+  setInterval(() => {
+    if (wipActionTxt) {
+      statusMsgIndex = (statusMsgIndex + 1) % statusMessages.length;
+      wipActionTxt.style.opacity = '0';
+      setTimeout(() => {
+        wipActionTxt.textContent = statusMessages[statusMsgIndex];
+        wipActionTxt.style.transition = 'opacity 0.4s ease';
+        wipActionTxt.style.opacity = '1';
+      }, 300);
+    }
+  }, 3200);
 
-  modalDemoBtn?.addEventListener('click', () => {
-    alert('Prototype sandbox instance initializing for selected project showcase.');
-  });
+  // Dynamic live progress percentage pulse
+  let currentPct = 96;
+  setInterval(() => {
+    // Gently breathe between 95 and 98%
+    const offsets = [95, 96, 97, 98, 97, 96];
+    currentPct = offsets[Math.floor(Math.random() * offsets.length)];
+    if (wipPctEl) wipPctEl.textContent = `${currentPct}%`;
+    if (wipBarFill) wipBarFill.style.width = `${currentPct}%`;
+  }, 4000);
 
   // =========================================================================
-  // 10. CONTACT FORM, EMAIL COPY & LIVE IST CLOCK
+  // 9. LIVE IST CLOCK & ONE-CLICK EMAIL COPY
   // =========================================================================
-  // Live IST Clock (Kolkata: Asia/Kolkata)
   const istClockEl = document.getElementById('ist-live-clock');
   function updateISTClock() {
     if (!istClockEl) return;
@@ -599,17 +466,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Inquiry Form Validation & Submission
+  // =========================================================================
+  // 10. SOOTHING CONTACT FORM SUBMISSION & CONFIRMATION POPUP MODAL
+  // =========================================================================
   const contactForm = document.getElementById('contact-form');
   const nameInput = document.getElementById('form-name');
   const emailInput = document.getElementById('form-email');
   const messageInput = document.getElementById('form-message');
-  const feedbackMsg = document.getElementById('form-feedback-message');
   const submitBtn = document.getElementById('form-submit-btn');
 
   const nameError = document.getElementById('name-error');
   const emailError = document.getElementById('email-error');
   const messageError = document.getElementById('message-error');
+
+  const successModal = document.getElementById('contact-success-modal');
+  const successCloseBtn = document.getElementById('success-modal-close');
+  const successDismissBtn = document.getElementById('success-dismiss-btn');
+  const successBackdrop = document.getElementById('success-modal-backdrop');
+
+  function openSuccessModal() {
+    if (!successModal) return;
+    successModal.classList.add('active');
+    successModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    synth.playHoverBlip();
+  }
+
+  function closeSuccessModal() {
+    if (!successModal) return;
+    successModal.classList.remove('active');
+    successModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  successCloseBtn?.addEventListener('click', closeSuccessModal);
+  successDismissBtn?.addEventListener('click', closeSuccessModal);
+  successBackdrop?.addEventListener('click', closeSuccessModal);
 
   function validateEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -619,48 +511,39 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     let isValid = true;
 
-    // Reset errors
     if (nameError) nameError.textContent = '';
     if (emailError) emailError.textContent = '';
     if (messageError) messageError.textContent = '';
-    if (feedbackMsg) {
-      feedbackMsg.textContent = '';
-      feedbackMsg.className = 'form-feedback-msg';
-    }
 
-    if (!nameInput.value.trim()) {
-      if (nameError) nameError.textContent = 'Please enter your name.';
+    if (!nameInput?.value.trim()) {
+      if (nameError) nameError.textContent = 'Please provide your name.';
       isValid = false;
     }
 
-    if (!emailInput.value.trim() || !validateEmail(emailInput.value.trim())) {
-      if (emailError) emailError.textContent = 'Please enter a valid email address.';
+    if (!emailInput?.value.trim() || !validateEmail(emailInput.value.trim())) {
+      if (emailError) emailError.textContent = 'Please provide a valid email address.';
       isValid = false;
     }
 
-    if (!messageInput.value.trim() || messageInput.value.trim().length < 10) {
-      if (messageError) messageError.textContent = 'Please provide details about the project vision (min 10 chars).';
+    if (!messageInput?.value.trim() || messageInput.value.trim().length < 6) {
+      if (messageError) messageError.textContent = 'Please tell me a little about your project or message.';
       isValid = false;
     }
 
     if (!isValid) return;
 
-    // Simulate Transmission
     if (submitBtn) {
       submitBtn.disabled = true;
       const originalText = submitBtn.innerHTML;
-      submitBtn.innerHTML = `<span>ENCRYPTING & TRANSMITTING...</span>`;
+      submitBtn.innerHTML = `<span>SENDING...</span>`;
 
       setTimeout(() => {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
         contactForm.reset();
-
-        if (feedbackMsg) {
-          feedbackMsg.className = 'form-feedback-msg success';
-          feedbackMsg.textContent = 'TRANSMISSION RECEIVED. SAGNIK WILL RESPOND WITHIN 24 HOURS.';
-        }
-      }, 1200);
+        // Show soothing pop-up as requested by the user
+        openSuccessModal();
+      }, 700);
     }
   });
 
