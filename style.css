@@ -701,13 +701,17 @@ button {
 .hero-giant-word {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(6.5rem, 18vw, 22rem);
+  font-size: clamp(7rem, 20vw, 26rem);
   letter-spacing: -0.04em;
-  color: rgba(255, 255, 255, 0.045);
+  color: rgba(255, 255, 255, 0.055);
   text-transform: uppercase;
   display: inline-block;
   transform-origin: center;
-  text-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+  text-shadow:
+    0 0 120px rgba(223, 255, 0, 0.12),
+    0 0 60px rgba(223, 255, 0, 0.06),
+    0 0 200px rgba(0, 0, 0, 0.5);
+  -webkit-text-stroke: 1px rgba(223, 255, 0, 0.08);
 }
 
 .hero-giant-subword {
@@ -715,13 +719,13 @@ button {
   font-weight: 800;
   font-size: clamp(2rem, 6.5vw, 7.5rem);
   letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.035);
+  color: rgba(255, 255, 255, 0.04);
   text-transform: uppercase;
   display: inline-block;
 }
 
 .hero-giant-subword.outline-mode {
-  -webkit-text-stroke: 1px rgba(223, 255, 0, 0.12);
+  -webkit-text-stroke: 1px rgba(223, 255, 0, 0.14);
   color: transparent;
 }
 
@@ -745,10 +749,30 @@ button {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at 50% 60%, rgba(223, 255, 0, 0.12) 0%, transparent 68%);
-  filter: blur(60px);
+  background:
+    radial-gradient(ellipse 85% 55% at 50% 80%, rgba(223, 255, 0, 0.22) 0%, rgba(255, 199, 44, 0.1) 40%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(223, 255, 0, 0.35) 0%, transparent 60%);
+  filter: blur(45px);
   z-index: 1;
 }
+
+/* Ground bloom: glowing puddle of light at portrait's feet */
+.hero-portrait-stage::after {
+  content: '';
+  position: absolute;
+  bottom: -18%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 200px;
+  background: radial-gradient(ellipse at center, rgba(223, 255, 0, 0.28) 0%, rgba(223, 255, 0, 0.08) 45%, transparent 75%);
+  filter: blur(38px);
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 50%;
+}
+
+
 
 .portrait-layer {
   position: absolute;
@@ -895,9 +919,9 @@ button {
 
 .hero-manifesto-statement {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.8rem);
+  font-size: clamp(1.6rem, 3.2vw, 3.2rem);
   font-weight: 800;
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: -0.02em;
   color: var(--text-primary);
   margin-bottom: 2rem;
@@ -3853,17 +3877,33 @@ button {
   .hero-content-container {
     flex-direction: column;
     align-items: flex-start;
-    gap: 2.5rem;
-    padding: 0 1.8rem 2.5rem 1.8rem;
+    gap: 1.5rem;
+    padding: 0 1.6rem 2.2rem 1.6rem;
+    justify-content: flex-end;
+  }
+  .hero-meta-left {
+    max-width: 100%;
+    width: 100%;
+  }
+  .hero-manifesto-statement {
+    font-size: clamp(2rem, 8.5vw, 3.2rem);
+    line-height: 1.05;
   }
   .hero-meta-right {
     align-items: flex-start;
     text-align: left;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+  }
+  .hero-scroll-cue {
+    display: none;
   }
   .hero-portrait-stage {
-    width: 95vw;
-    height: 65vh;
-    transform: translate(-50%, -40%);
+    width: 100vw;
+    height: 75vh;
+    transform: translate(-50%, -38%);
+    left: 50%;
   }
   .form-row {
     grid-template-columns: 1fr;
@@ -4017,6 +4057,19 @@ button {
   .hero-cta-btn, .hero-cta-btn-secondary {
     justify-content: center;
     width: 100%;
+  }
+  .hero-manifesto-statement {
+    font-size: clamp(1.85rem, 9.5vw, 2.8rem);
+  }
+  .hero-badge-pill {
+    font-size: 0.55rem;
+    letter-spacing: 0.14em;
+  }
+  .hero-badge-sub {
+    font-size: 0.58rem;
+  }
+  .hero-meta-right {
+    display: none;
   }
   .collab-actions {
     flex-direction: column;
