@@ -17,9 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
       wheelMultiplier: 1.15,
       touchMultiplier: 1.5,
     });
-      wheelMultiplier: 1,
-      touchMultiplier: 1.5,
-    });
 
     function raf(time) {
       lenis.raf(time);

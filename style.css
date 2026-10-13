@@ -1761,57 +1761,22 @@ button {
   filter: brightness(1.12);
 }
 
-/* Individual Badge Palettes (Matching user screenshot) */
-.badge-html5 { background-color: #E44D26; color: #FFFFFF; }
-.badge-html5:hover { box-shadow: 0 6px 20px rgba(228, 77, 38, 0.5); }
+/* Sleek Monochrome Yellow & Black Badges */
+.tech-badge {
+  background-color: rgba(16, 16, 16, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+}
 
-.badge-css3 { background-color: #1572B6; color: #FFFFFF; }
-.badge-css3:hover { box-shadow: 0 6px 20px rgba(21, 114, 182, 0.5); }
-
-.badge-javascript { background-color: #F7DF1E; color: #000000; font-weight: 800; }
-.badge-javascript:hover { box-shadow: 0 6px 20px rgba(247, 223, 30, 0.5); }
-
-.badge-react { background-color: #00D8FF; color: #000000; font-weight: 800; }
-.badge-react:hover { box-shadow: 0 6px 20px rgba(0, 216, 255, 0.5); }
-
-.badge-typescript { background-color: #3178C6; color: #FFFFFF; }
-.badge-typescript:hover { box-shadow: 0 6px 20px rgba(49, 120, 198, 0.5); }
-
-.badge-nodejs { background-color: #339933; color: #FFFFFF; }
-.badge-nodejs:hover { box-shadow: 0 6px 20px rgba(51, 153, 51, 0.5); }
-
-.badge-express { background-color: #0d0d0d; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.25); }
-.badge-express:hover { box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2); }
-
-.badge-fastapi { background-color: #009688; color: #FFFFFF; }
-.badge-fastapi:hover { box-shadow: 0 6px 20px rgba(0, 150, 136, 0.5); }
-
-.badge-restapi { background-color: #0073E6; color: #FFFFFF; }
-.badge-restapi:hover { box-shadow: 0 6px 20px rgba(0, 115, 230, 0.5); }
-
-.badge-mongodb { background-color: #47A248; color: #FFFFFF; }
-.badge-mongodb:hover { box-shadow: 0 6px 20px rgba(71, 162, 72, 0.5); }
-
-.badge-gcloud { background-color: #4285F4; color: #FFFFFF; }
-.badge-gcloud:hover { box-shadow: 0 6px 20px rgba(66, 133, 244, 0.5); }
-
-.badge-vercel { background-color: #000000; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.25); }
-.badge-vercel:hover { box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25); }
-
-.badge-render { background-color: #46E3B7; color: #000000; font-weight: 800; }
-.badge-render:hover { box-shadow: 0 6px 20px rgba(70, 227, 183, 0.5); }
-
-.badge-netlify { background-color: #00C7B7; color: #000000; font-weight: 800; }
-.badge-netlify:hover { box-shadow: 0 6px 20px rgba(0, 199, 183, 0.5); }
-
-.badge-hostinger { background-color: #673AB7; color: #FFFFFF; }
-.badge-hostinger:hover { box-shadow: 0 6px 20px rgba(103, 58, 183, 0.5); }
-
-.badge-godaddy { background-color: #1BAFB7; color: #000000; font-weight: 800; }
-.badge-godaddy:hover { box-shadow: 0 6px 20px rgba(27, 175, 183, 0.5); }
-
-.badge-vscode { background-color: #007ACC; color: #FFFFFF; }
-.badge-vscode:hover { box-shadow: 0 6px 20px rgba(0, 122, 204, 0.55); }
+.tech-badge:hover {
+  background-color: #000000;
+  border-color: var(--neon-yellow);
+  color: var(--neon-yellow);
+  box-shadow: 0 0 20px rgba(223, 255, 0, 0.35);
+  transform: translateY(-3px) scale(1.02);
+}
 
 .badge-antigravity { 
   background: linear-gradient(135deg, #DFFF00 0%, #B8E600 100%); 
@@ -1819,16 +1784,12 @@ button {
   font-weight: 800; 
   border: 1px solid #DFFF00; 
 }
-.badge-antigravity:hover { box-shadow: 0 6px 22px rgba(223, 255, 0, 0.65); }
-
-.badge-postman { background-color: #FF6C37; color: #FFFFFF; }
-.badge-postman:hover { box-shadow: 0 6px 20px rgba(255, 108, 55, 0.5); }
-
-.badge-git { background-color: #F05032; color: #FFFFFF; }
-.badge-git:hover { box-shadow: 0 6px 20px rgba(240, 80, 50, 0.5); }
-
-.badge-github { background-color: #181717; color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.25); }
-.badge-github:hover { box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25); }
+.badge-antigravity:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.5);
+}
 
 /* ==========================================================================
    SKILLS SECTION (Interactive Editorial Matrix)
@@ -2473,408 +2434,387 @@ button {
 }
 
 /* ==========================================================================
-   ESCAPE & TRIP STORIES SECTION (BEYOND THE CODE)
-   Fixed background photo, fullscreen height, horizontal scrolling cards
+   PASSION & ESCAPE SECTION (Magazine Cinematic Adventure Showcase)
    ========================================================================== */
-.passion-section,
-.escape-section {
+.passion-section {
   position: relative;
-  background-color: transparent; /* bg comes from the fixed backdrop */
-  overflow: visible;
-  min-height: 100vh;
-  z-index: 1;
-  isolation: isolate;
+  background-color: #050505;
+  overflow: hidden; /* Strictly contained! No backdrop will ever bleed into Contact */
+  z-index: 2;
 }
 
-/* Backdrop Stage: fixed so background stays still as content scrolls */
-.escape-backdrop-stage {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.7s ease;
-  background: #050505;
-}
-
-.escape-section.bg-active .escape-backdrop-stage {
-  opacity: 1;
-  z-index: -1;
-}
-
-.escape-bg-photo {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: auto;
-  min-width: 100%;
-  object-fit: cover;
-  object-position: left 5%; /* Pinned to top-left so hair & head are 100% visible */
-}
-
-/* Vignette Scrim: eliminates hard cut lines at top/bottom and blends smoothly into right canvas */
-.escape-vignette-scrim {
+.passion-ambient-backdrop {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  background: 
-    linear-gradient(to bottom, #050505 0%, rgba(5, 5, 5, 0.7) 4%, transparent 14%),
-    linear-gradient(to top, #050505 0%, rgba(5, 5, 5, 0.7) 4%, transparent 14%),
-    linear-gradient(to right,
-      rgba(5, 5, 5, 0) 0%,
-      rgba(5, 5, 5, 0) 32%,
-      rgba(5, 5, 5, 0.55) 42%,
-      rgba(5, 5, 5, 0.88) 54%,
-      rgba(5, 5, 5, 0.98) 68%,
-      #050505 100%
-    );
+  overflow: hidden;
+  z-index: 0;
 }
 
-/* Wide Container: proper full-height padding */
-.escape-container {
-  width: 100%;
-  max-width: 1650px;
-  margin: 0 auto;
-  padding: 8rem 4rem 6rem 2rem;
-  position: relative;
-  z-index: 2;
-}
-
-/* Asymmetrical Grid: Left column reserves Sagnik's space, Right column takes full remaining width */
-.escape-layout-grid {
-  display: grid;
-  grid-template-columns: minmax(360px, 32vw) 1fr;
-  gap: 3.5rem;
-  align-items: flex-start;
-  min-height: 750px;
-  position: relative;
-  z-index: 2;
-}
-
-/* Left clearance column: 100% EMPTY to keep Sagnik's standing portrait completely clear of text */
-.escape-man-clearance {
-  min-height: 600px;
-  pointer-events: none;
-}
-
-/* Right Content Column: expands cleanly across the remaining width */
-.escape-content-column {
-  display: flex;
-  flex-direction: column;
-  gap: 2.8rem;
-  width: 100%;
-  position: relative;
-  z-index: 2;
-}
-
-/* Scroll hint label */
-.escape-scroll-hint {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  color: var(--text-muted);
-  text-align: center;
-  margin-top: 0.5rem;
-  animation: hintPulse 2s ease-in-out infinite;
-}
-
-@keyframes hintPulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
-}
-
-.escape-header {
-  margin-bottom: 0;
-}
-
-.escape-huge-title {
-  font-size: clamp(3.4rem, 7.5vw, 6.8rem);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-}
-
-/* Collab Invitation Banner */
-.passion-collab-card {
-  position: relative;
-  background: linear-gradient(135deg, rgba(16, 16, 16, 0.94) 0%, rgba(10, 10, 10, 0.98) 100%);
-  border: 1px solid rgba(223, 255, 0, 0.28);
-  border-radius: 8px;
-  padding: 2.4rem 2.8rem;
-  margin-bottom: 0;
-  display: grid;
-  grid-template-columns: 72px 1fr auto;
-  gap: 2.2rem;
-  align-items: center;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(223, 255, 0, 0.05);
-  backdrop-filter: blur(12px);
-  z-index: 2;
-  transition: border-color 0.4s ease, box-shadow 0.4s ease;
-  width: 100%;
-}
-
-.passion-collab-card:hover {
-  border-color: var(--neon-yellow);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(223, 255, 0, 0.12);
-}
-
-.collab-icon-box {
-  width: 80px;
-  height: 80px;
+.passion-bg-radial {
+  position: absolute;
+  top: 10%;
+  left: -10%;
+  width: 60vw;
+  height: 60vw;
   border-radius: 50%;
-  background: rgba(223, 255, 0, 0.08);
-  border: 1px solid var(--border-yellow);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: radial-gradient(circle, rgba(223, 255, 0, 0.035) 0%, transparent 65%);
+  filter: blur(80px);
 }
 
-.collab-emoji {
-  font-size: 2.2rem;
-}
-
-.collab-text-content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.collab-tag {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  color: var(--neon-yellow);
-}
-
-.collab-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  color: var(--text-primary);
-}
-
-.collab-desc {
-  font-size: 0.92rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  max-width: 720px;
-}
-
-.collab-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-}
-
-.collab-dm-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  background: var(--neon-yellow);
-  color: var(--bg-deep);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  padding: 0.95rem 1.8rem;
-  border-radius: 2px;
-  box-shadow: 0 0 20px var(--neon-yellow-glow);
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
-.collab-dm-btn:hover {
-  background: #ffffff;
-  color: var(--bg-deep);
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
-  transform: translateY(-2px);
-}
-
-.collab-alt-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  padding: 0.85rem 1.6rem;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-}
-
-.collab-alt-btn:hover {
-  border-color: var(--neon-yellow);
-  color: var(--neon-yellow);
-  background: rgba(223, 255, 0, 0.06);
-}
-
-/* Trip Stories Grid */
-.trip-stories-grid {
+.passion-showcase-layout {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.2rem;
+  grid-template-columns: 440px 1fr;
+  gap: 3.5rem;
+  align-items: stretch;
+  margin-bottom: 3.5rem;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
-.trip-story-card {
-  background: rgba(12, 12, 12, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+/* Left: Rider Portrait & Manifesto Card */
+.passion-rider-card {
+  background: #090909;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: all 0.4s var(--ease-smooth);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.trip-story-card:hover {
-  border-color: rgba(223, 255, 0, 0.35);
-  transform: translateY(-6px);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 25px rgba(223, 255, 0, 0.08);
+.passion-rider-card:hover {
+  border-color: rgba(223, 255, 0, 0.4);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(223, 255, 0, 0.08);
 }
 
-.trip-img-wrap {
+.rider-image-container {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  height: 380px;
   overflow: hidden;
-  background: #080808;
+  background-color: #020202;
 }
 
-.trip-card-img {
+.rider-portrait-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.88) contrast(1.1);
-  transition: transform 0.6s var(--ease-cinematic), filter 0.6s ease;
+  object-position: center 15%;
+  transition: transform 0.5s ease;
+  filter: contrast(1.08) brightness(0.95);
 }
 
-.trip-story-card:hover .trip-card-img {
-  transform: scale(1.06);
-  filter: brightness(1) contrast(1.05);
+.passion-rider-card:hover .rider-portrait-img {
+  transform: scale(1.03);
 }
 
-.trip-img-overlay {
+.rider-img-vignette {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 50%, rgba(12, 12, 12, 0.95) 100%);
+  background: linear-gradient(180deg, transparent 40%, rgba(9, 9, 9, 0.95) 100%),
+              radial-gradient(circle at center, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
   pointer-events: none;
 }
 
-.trip-badge {
+.rider-mode-badge {
   position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background: rgba(5, 5, 5, 0.85);
-  border: 1px solid var(--border-yellow);
-  padding: 0.35rem 0.75rem;
+  top: 1.2rem;
+  left: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.9rem;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(223, 255, 0, 0.45);
+  backdrop-filter: blur(10px);
   border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.65rem;
+  font-weight: 700;
   letter-spacing: 0.12em;
   color: var(--neon-yellow);
-  backdrop-filter: blur(8px);
 }
 
-.trip-card-content {
-  padding: 1.8rem;
+.mode-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--neon-yellow);
+  box-shadow: 0 0 8px var(--neon-yellow);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+.rider-manifesto-details {
+  padding: 2.2rem;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 2rem;
   flex: 1;
-}
-
-.trip-meta-row {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  color: var(--text-muted);
+  background: #090909;
 }
 
-.trip-title {
+.manifesto-quote-box {
+  position: relative;
+}
+
+.manifesto-mark {
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--neon-yellow);
+  display: block;
+  margin-bottom: -0.8rem;
+}
+
+.manifesto-quote-text {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.6;
   color: var(--text-primary);
-  letter-spacing: 0.03em;
+  font-style: italic;
+}
+
+.rider-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1.5rem;
+}
+
+.rider-stat-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.rider-stat-val {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.rider-stat-sub {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
   line-height: 1.3;
 }
 
-.trip-snippet {
-  font-size: 0.86rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.escape-stories-grid {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.8rem;
-}
-
-/* Horizontal Scroll Track for Trip Stories */
-.escape-hscroll-track {
+/* Right Column: 3 Adventure Story Cards */
+.passion-stories-column {
   display: flex;
-  gap: 1.8rem;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(223,255,0,0.3) transparent;
-  padding-bottom: 1rem;
-  cursor: grab;
-  touch-action: pan-x;
-  user-select: none;
+  flex-direction: column;
+  gap: 1.5rem;
 }
-.escape-hscroll-track:active {
-  cursor: grabbing;
+
+.adventure-story-card {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  background: #090909;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.escape-hscroll-track::-webkit-scrollbar {
-  height: 4px;
+
+.adventure-story-card:hover {
+  transform: translateX(6px);
+  border-color: rgba(223, 255, 0, 0.35);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(223, 255, 0, 0.06);
 }
-.escape-hscroll-track::-webkit-scrollbar-track {
-  background: transparent;
+
+.adventure-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 175px;
+  overflow: hidden;
+  background-color: #020202;
 }
-.escape-hscroll-track::-webkit-scrollbar-thumb {
-  background: rgba(223,255,0,0.35);
+
+.adventure-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.adventure-story-card:hover .adventure-img {
+  transform: scale(1.05);
+}
+
+.adventure-badge-tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #000000;
+  background: var(--neon-yellow);
+  padding: 0.3rem 0.65rem;
   border-radius: 2px;
 }
-.escape-hscroll-track .trip-story-card {
-  flex: 0 0 clamp(280px, 38vw, 460px);
-  scroll-snap-align: start;
+
+.adventure-content {
+  padding: 1.8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
 }
 
-.trip-stats-pills {
+.adventure-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: var(--neon-yellow);
+}
+
+.adv-meta-time {
+  color: var(--text-muted);
+}
+
+.adventure-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.adventure-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.adventure-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 0.5rem;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
 }
 
-.trip-pill {
+.adv-pill {
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.65rem;
   letter-spacing: 0.08em;
-  padding: 0.35rem 0.75rem;
-  background: rgba(223, 255, 0, 0.08);
-  border: 1px solid rgba(223, 255, 0, 0.25);
-  color: var(--neon-yellow);
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0.25rem 0.6rem;
   border-radius: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.adventure-story-card:hover .adv-pill {
+  color: var(--neon-yellow);
+  border-color: rgba(223, 255, 0, 0.2);
+}
+
+/* Bottom Collaboration Banner */
+.passion-collab-banner {
+  background: #090909;
+  border: 1px solid rgba(223, 255, 0, 0.25);
+  border-radius: 8px;
+  padding: 2.2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(223, 255, 0, 0.03);
+}
+
+.collab-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.collab-banner-prefix {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--neon-yellow);
+}
+
+.collab-banner-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.collab-banner-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.collab-banner-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: var(--neon-yellow);
+  color: #000000;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  padding: 0.95rem 1.8rem;
+  border-radius: 2px;
+  white-space: nowrap;
+  box-shadow: 0 0 20px var(--neon-yellow-glow);
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.collab-banner-cta:hover {
+  background: #ffffff;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1024px) {
+  .passion-showcase-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .passion-rider-card {
+    max-width: 580px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .passion-collab-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .adventure-story-card {
+    grid-template-columns: 1fr;
+  }
+  .adventure-img-wrap {
+    height: 200px;
+  }
 }
 
 /* ==========================================================================
