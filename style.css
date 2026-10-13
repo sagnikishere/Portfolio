@@ -642,7 +642,8 @@ button {
   position: relative;
   width: 100%;
   height: 100vh;
-  min-height: 720px;
+  height: 100svh; /* safe area on mobile browsers */
+  min-height: 600px;
   overflow: hidden;
   background-color: var(--bg-deep);
   display: flex;
@@ -792,6 +793,9 @@ button {
   opacity: 0.085;
   filter: brightness(0.25) contrast(1.2) drop-shadow(0 0 35px rgba(223, 255, 0, 0.15));
   transition: opacity 0.5s ease, filter 0.5s ease;
+  /* Bottom fade */
+  -webkit-mask-image: linear-gradient(to bottom, black 45%, rgba(0,0,0,0.6) 72%, transparent 92%);
+  mask-image: linear-gradient(to bottom, black 45%, rgba(0,0,0,0.6) 72%, transparent 92%);
 }
 
 /* Layer 2: Flashlight Reveal Layer */
@@ -799,9 +803,15 @@ button {
   z-index: 3;
   opacity: 1;
   filter: brightness(1.2) contrast(1.18) saturate(1.1) drop-shadow(0 0 30px rgba(223, 255, 0, 0.28));
-  /* Dynamic organic soft radial mask following cursor */
-  -webkit-mask-image: radial-gradient(circle 240px at var(--spot-x, 50%) var(--spot-y, 45%), rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0) 100%);
-  mask-image: radial-gradient(circle 240px at var(--spot-x, 50%) var(--spot-y, 45%), rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0) 100%);
+  /* Spotlight reveal + bottom fade combined */
+  -webkit-mask-image:
+    linear-gradient(to bottom, black 45%, rgba(0,0,0,0.55) 72%, transparent 92%),
+    radial-gradient(circle 240px at var(--spot-x, 50%) var(--spot-y, 45%), rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0) 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, black 45%, rgba(0,0,0,0.55) 72%, transparent 92%),
+    radial-gradient(circle 240px at var(--spot-x, 50%) var(--spot-y, 45%), rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0) 100%);
+  mask-composite: intersect;
   transition: opacity 0.4s ease;
 }
 
@@ -2025,6 +2035,58 @@ button {
 }
 
 /* ==========================================================================
+   PROJECTS SECTION (Cinematic Coming Soon Video Stage)
+   ========================================================================== */
+.projects-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+  overflow: hidden;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.projects-video-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+  pointer-events: none;
+}
+
+.projects-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  background-color: #000000;
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .projects-bg-video {
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 768px) {
+  .projects-section {
+    min-height: 70vh;
+    height: 70vh;
+  }
+}
+
+/* ==========================================================================
    WORK IN PROGRESS / COMING VERY SOON CINEMATIC STAGE
    ========================================================================== */
 .projects-wip-stage {
@@ -3028,9 +3090,40 @@ button {
 
 .contact-section {
   position: relative;
-  background: radial-gradient(circle at 85% 15%, rgba(223, 255, 0, 0.03) 0%, transparent 55%),
-              radial-gradient(circle at 15% 85%, rgba(56, 189, 248, 0.035) 0%, transparent 60%),
-              #050505;
+  overflow: hidden;
+  background-color: #050505;
+}
+
+.contact-video-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contact-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  filter: brightness(0.68) contrast(1.15) saturate(1.1);
+}
+
+.contact-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 60% 40%, rgba(5, 5, 5, 0.45) 0%, rgba(3, 3, 3, 0.82) 100%),
+              linear-gradient(180deg, rgba(3, 3, 3, 0.96) 0%, rgba(3, 3, 3, 0.35) 15%, rgba(3, 3, 3, 0.5) 80%, rgba(3, 3, 3, 0.98) 100%);
+  pointer-events: none;
+}
+
+.contact-section .section-container {
+  position: relative;
+  z-index: 2;
 }
 
 .contact-layout-grid {
@@ -3901,9 +3994,10 @@ button {
   }
   .hero-portrait-stage {
     width: 100vw;
-    height: 75vh;
-    transform: translate(-50%, -38%);
+    height: 85vh;
+    top: 64px;            /* sit flush just below the navbar */
     left: 50%;
+    transform: translateX(-50%);
   }
   .form-row {
     grid-template-columns: 1fr;

@@ -9,11 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let lenis;
   try {
     lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.65, // Fast, snappy, responsive smooth scroll (no laggy sluggishness)
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
+      wheelMultiplier: 1.15,
+      touchMultiplier: 1.5,
+    });
       wheelMultiplier: 1,
       touchMultiplier: 1.5,
     });
@@ -95,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Interactive Hover Targets
   const interactiveElements = document.querySelectorAll(
-    'a, button, .skill-pill, .tech-badge, input, textarea, .trip-story-card, .passion-collab-card, .about-photo-wrapper, .pillar-item, .about-monogram-box, .social-pill-btn, .about-stat-item, .wip-sketch-wrapper'
+    'a, button, .skill-pill, .tech-badge, input, textarea, .adventure-card, .manifesto-img-wrapper, .passion-collab-strip, .about-photo-wrapper, .pillar-item, .about-monogram-box, .social-pill-btn, .about-stat-item'
   );
 
   interactiveElements.forEach((el) => {
@@ -467,43 +470,44 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 8. PROJECTS "WORK IN PROGRESS" DYNAMIC LOADING ANIMATION
+  // 8. PROJECTS "WORK IN PROGRESS" DYNAMIC LOADING ANIMATION (Guarded)
   // =========================================================================
   const wipPctEl = document.getElementById('wip-numeric-pct');
   const wipActionTxt = document.getElementById('wip-action-txt');
   const wipBarFill = document.getElementById('wip-bar-fill');
 
-  const statusMessages = [
-    '> GOOD THING TAKES TIME...',
-    '> 95% COMPLETED — FINALIZING POLISH...',
-    '> DEPLOYING FULL-STACK & GRAPHIC ASSETS...',
-    '> COMPILING HIGH-PERFORMANCE WEB APPS...',
-    '> POLISHING BRAND IDENTITY & LOGO ASSETS...',
-    '> PREPARING INTERACTIVE 60FPS DEMOS...'
-  ];
+  if (wipActionTxt || wipPctEl || wipBarFill) {
+    const statusMessages = [
+      '> GOOD THING TAKES TIME...',
+      '> 95% COMPLETED — FINALIZING POLISH...',
+      '> DEPLOYING FULL-STACK & GRAPHIC ASSETS...',
+      '> COMPILING HIGH-PERFORMANCE WEB APPS...',
+      '> POLISHING BRAND IDENTITY & LOGO ASSETS...',
+      '> PREPARING INTERACTIVE 60FPS DEMOS...'
+    ];
 
-  let statusMsgIndex = 0;
-  setInterval(() => {
-    if (wipActionTxt) {
-      statusMsgIndex = (statusMsgIndex + 1) % statusMessages.length;
-      wipActionTxt.style.opacity = '0';
-      setTimeout(() => {
-        wipActionTxt.textContent = statusMessages[statusMsgIndex];
-        wipActionTxt.style.transition = 'opacity 0.4s ease';
-        wipActionTxt.style.opacity = '1';
-      }, 300);
-    }
-  }, 3200);
+    let statusMsgIndex = 0;
+    setInterval(() => {
+      if (wipActionTxt) {
+        statusMsgIndex = (statusMsgIndex + 1) % statusMessages.length;
+        wipActionTxt.style.opacity = '0';
+        setTimeout(() => {
+          wipActionTxt.textContent = statusMessages[statusMsgIndex];
+          wipActionTxt.style.transition = 'opacity 0.4s ease';
+          wipActionTxt.style.opacity = '1';
+        }, 300);
+      }
+    }, 3200);
 
-  // Dynamic live progress percentage pulse
-  let currentPct = 96;
-  setInterval(() => {
-    // Gently breathe between 95 and 98%
-    const offsets = [95, 96, 97, 98, 97, 96];
-    currentPct = offsets[Math.floor(Math.random() * offsets.length)];
-    if (wipPctEl) wipPctEl.textContent = `${currentPct}%`;
-    if (wipBarFill) wipBarFill.style.width = `${currentPct}%`;
-  }, 4000);
+    // Dynamic live progress percentage pulse
+    let currentPct = 96;
+    setInterval(() => {
+      const offsets = [95, 96, 97, 98, 97, 96];
+      currentPct = offsets[Math.floor(Math.random() * offsets.length)];
+      if (wipPctEl) wipPctEl.textContent = `${currentPct}%`;
+      if (wipBarFill) wipBarFill.style.width = `${currentPct}%`;
+    }, 4000);
+  }
 
   // =========================================================================
   // 9. LIVE IST CLOCK & ONE-CLICK EMAIL COPY
@@ -642,51 +646,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // ESCAPE SECTION — Fixed background activation + drag-scroll on cards
+  // PASSION SECTION & INTERACTIVE ADVENTURE CARDS
   // =========================================================================
-  const escapeSection = document.getElementById('passion');
-
-  // Toggle bg-active class so the fixed backdrop fades in/out
-  if (escapeSection) {
-    const escapeObserver = new IntersectionObserver(
-      ([entry]) => {
-        escapeSection.classList.toggle('bg-active', entry.isIntersecting);
-      },
-      { threshold: 0.05 }
-    );
-    escapeObserver.observe(escapeSection);
-  }
-
-  // Mouse drag-to-scroll for horizontal trip cards track
-  const hscroll = document.getElementById('escape-hscroll');
-  if (hscroll) {
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    hscroll.addEventListener('mousedown', (e) => {
-      isDown = true;
-      hscroll.style.cursor = 'grabbing';
-      startX = e.pageX - hscroll.offsetLeft;
-      scrollLeft = hscroll.scrollLeft;
-      if (lenis) lenis.stop();
+  const adventureCards = document.querySelectorAll('.adventure-card');
+  adventureCards.forEach((card) => {
+    card.addEventListener('mouseenter', () => {
+      cursor?.classList.add('cursor-hover');
     });
-    hscroll.addEventListener('mouseleave', () => {
-      if (isDown && lenis) lenis.start();
-      isDown = false;
-      hscroll.style.cursor = 'grab';
+    card.addEventListener('mouseleave', () => {
+      cursor?.classList.remove('cursor-hover');
     });
-    hscroll.addEventListener('mouseup', () => {
-      if (lenis) lenis.start();
-      isDown = false;
-      hscroll.style.cursor = 'grab';
-    });
-    hscroll.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - hscroll.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      hscroll.scrollLeft = scrollLeft - walk;
-    });
-  }
+  });
 });

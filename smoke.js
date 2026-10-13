@@ -9,7 +9,7 @@ export class SmokeSimulation {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d', { alpha: true });
     this.particles = [];
-    this.particleCount = 42;
+    this.particleCount = 20; // Optimized for butter-smooth 60fps performance
     this.smokeSprite = null;
 
     this.mouse = {
