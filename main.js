@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Interactive Hover Targets
   const interactiveElements = document.querySelectorAll(
-    'a, button, .skill-pill, .tech-badge, input, textarea, .adventure-card, .manifesto-img-wrapper, .passion-collab-strip, .about-photo-wrapper, .pillar-item, .about-monogram-box, .social-pill-btn, .about-stat-item'
+    'a, button, .skill-pill, .tech-badge, input, textarea, .about-photo-wrapper, .about-focus-card, .about-intro-card, .about-social-pill, .about-cta-link, .stat-bento-item, .about-chip, .about-identity-strip'
   );
 
   interactiveElements.forEach((el) => {
@@ -105,17 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     el.addEventListener('mouseleave', () => {
       cursor?.classList.remove('cursor-hover');
-    });
-  });
-
-  // Trip story cards trigger "VIEW" label on cursor
-  const tripCards = document.querySelectorAll('.trip-story-card');
-  tripCards.forEach((el) => {
-    el.addEventListener('mouseenter', () => {
-      cursor?.classList.add('cursor-view');
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor?.classList.remove('cursor-view');
     });
   });
 
@@ -534,7 +523,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const copyEmailBtn = document.getElementById('copy-email-btn');
   const copyText = document.getElementById('copy-text');
   copyEmailBtn?.addEventListener('click', () => {
-    const email = 'sagnik.creative@gmail.com';
+    const email = 'sagnik25tojo@gmail.com';
     navigator.clipboard.writeText(email).then(() => {
       if (copyText) copyText.textContent = 'COPIED TO CLIPBOARD ✓';
       copyEmailBtn.style.background = 'var(--neon-yellow)';
@@ -558,6 +547,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const emailInput = document.getElementById('form-email');
   const messageInput = document.getElementById('form-message');
   const submitBtn = document.getElementById('form-submit-btn');
+
+  // Topic selector pills
+  const topicPills = document.querySelectorAll('.topic-pill');
+  topicPills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      topicPills.forEach((p) => p.classList.remove('active'));
+      pill.classList.add('active');
+      synth?.playHoverBlip();
+      const topic = pill.getAttribute('data-topic');
+      if (messageInput && !messageInput.value.trim()) {
+        messageInput.placeholder = `Tell me about your ${topic} project, timeline, or idea...`;
+      }
+    });
+  });
 
   const nameError = document.getElementById('name-error');
   const emailError = document.getElementById('email-error');
@@ -640,18 +643,5 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  });
-
-  // =========================================================================
-  // PASSION SECTION & INTERACTIVE ADVENTURE CARDS
-  // =========================================================================
-  const adventureCards = document.querySelectorAll('.adventure-card');
-  adventureCards.forEach((card) => {
-    card.addEventListener('mouseenter', () => {
-      cursor?.classList.add('cursor-hover');
-    });
-    card.addEventListener('mouseleave', () => {
-      cursor?.classList.remove('cursor-hover');
-    });
   });
 });
